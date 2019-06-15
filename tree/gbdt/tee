@@ -1,0 +1,1419 @@
+train size: 43272 test size: 10819
+43272 34617
+sampleSize:34617 feaSize:56
+--------------------------------------------------
+0
+sample: 34617 56
+data size:34617, fea dim:56
+depth: 0
+fea:67 spVec is none
+curVar:-4235.933594 minVar:340282346638528859811704183484516925440.000000
+curVar:-4273.080566 minVar:-4235.933594
+curVar:-4475.462402 minVar:-4273.080566
+curVar:-4646.204102 minVar:-4475.462402
+curVar:-4978.825195 minVar:-4646.204102
+minfea: 75 2.500 -4978.825
+depth: 1
+fea:67 spVec is none
+curVar:-1650.495361 minVar:340282346638528859811704183484516925440.000000
+curVar:-1656.565674 minVar:-1650.495361
+curVar:-1742.432129 minVar:-1656.565674
+minfea: 85 7.500 -1742.432
+depth: 2
+fea:68 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:67 spVec is none
+curVar:-652.207764 minVar:340282346638528859811704183484516925440.000000
+minfea: 2 5102.000 -652.208
+depth: 3
+fea:5 spVec is none
+fea:68 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+curVar:-755.432434 minVar:340282346638528859811704183484516925440.000000
+minfea: 4 0.500 -755.432
+depth: 4
+fea:7 spVec is none
+fea:4 spVec is none
+fea:5 spVec is none
+fea:68 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+curVar:-694.712891 minVar:340282346638528859811704183484516925440.000000
+minfea: 0 2550.000 -694.713
+depth: 4
+fea:68 spVec is none
+fea:5 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:67 spVec is none
+curVar:-113.276375 minVar:340282346638528859811704183484516925440.000000
+curVar:-124.051056 minVar:-113.276375
+curVar:-127.845032 minVar:-124.051056
+minfea: 66 0.500 -127.845
+depth: 3
+fea:7 spVec is none
+fea:68 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:67 spVec is none
+curVar:-20.971563 minVar:340282346638528859811704183484516925440.000000
+minfea: 1 9851.000 -20.972
+depth: 4
+fea:7 spVec is none
+fea:68 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+curVar:-3.867305 minVar:340282346638528859811704183484516925440.000000
+curVar:-4.291767 minVar:-3.867305
+curVar:-5.227832 minVar:-4.291767
+curVar:-5.294262 minVar:-5.227832
+minfea: 85 2.500 -5.294
+depth: 4
+fea:7 spVec is none
+fea:14 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:68 spVec is none
+fea:69 spVec is none
+fea:67 spVec is none
+fea:75 spVec is none
+curVar:-24.349693 minVar:340282346638528859811704183484516925440.000000
+curVar:-36.083366 minVar:-24.349693
+curVar:-36.509720 minVar:-36.083366
+curVar:-37.647346 minVar:-36.509720
+minfea: 85 1.500 -37.647
+depth: 2
+fea:7 spVec is none
+fea:67 spVec is none
+curVar:-1262.361572 minVar:340282346638528859811704183484516925440.000000
+curVar:-1264.373169 minVar:-1262.361572
+curVar:-1274.328247 minVar:-1264.373169
+curVar:-1277.380981 minVar:-1274.328247
+curVar:-1285.067505 minVar:-1277.380981
+minfea: 62 2.500 -1285.068
+depth: 3
+fea:7 spVec is none
+fea:67 spVec is none
+curVar:-1037.944946 minVar:340282346638528859811704183484516925440.000000
+curVar:-1040.506836 minVar:-1037.944946
+curVar:-1051.906250 minVar:-1040.506836
+curVar:-1060.304443 minVar:-1051.906250
+minfea: 85 15.500 -1060.304
+depth: 4
+fea:7 spVec is none
+fea:67 spVec is none
+curVar:-745.854675 minVar:340282346638528859811704183484516925440.000000
+curVar:-752.544983 minVar:-745.854675
+minfea: 16 0.500 -752.545
+depth: 4
+fea:7 spVec is none
+fea:68 spVec is none
+fea:67 spVec is none
+fea:75 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:83 spVec is none
+curVar:-378.012024 minVar:340282346638528859811704183484516925440.000000
+minfea: 0 11451.000 -378.012
+depth: 3
+fea:7 spVec is none
+fea:14 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:83 spVec is none
+fea:68 spVec is none
+fea:67 spVec is none
+curVar:-281.913391 minVar:340282346638528859811704183484516925440.000000
+curVar:-282.829285 minVar:-281.913391
+curVar:-283.880493 minVar:-282.829285
+minfea: 85 12.500 -283.880
+depth: 4
+fea:68 spVec is none
+fea:7 spVec is none
+fea:14 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:83 spVec is none
+fea:67 spVec is none
+curVar:-137.129211 minVar:340282346638528859811704183484516925440.000000
+curVar:-137.325226 minVar:-137.129211
+curVar:-137.336594 minVar:-137.325226
+curVar:-137.796295 minVar:-137.336594
+curVar:-137.796555 minVar:-137.796295
+minfea: 71 18.500 -137.797
+depth: 4
+fea:7 spVec is none
+fea:14 spVec is none
+fea:68 spVec is none
+fea:50 spVec is none
+fea:51 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:83 spVec is none
+fea:67 spVec is none
+fea:75 spVec is none
+curVar:-152.909088 minVar:340282346638528859811704183484516925440.000000
+curVar:-157.118988 minVar:-152.909088
+minfea: 32 16088.000 -157.119
+depth: 1
+fea:67 spVec is none
+curVar:-3583.761719 minVar:340282346638528859811704183484516925440.000000
+curVar:-3600.018555 minVar:-3583.761719
+curVar:-3674.825684 minVar:-3600.018555
+minfea: 66 0.500 -3674.826
+depth: 2
+fea:80 spVec is none
+fea:81 spVec is none
+fea:67 spVec is none
+curVar:-2069.232910 minVar:340282346638528859811704183484516925440.000000
+curVar:-2089.166260 minVar:-2069.232910
+curVar:-2144.239258 minVar:-2089.166260
+minfea: 85 7.500 -2144.239
+depth: 3
+fea:68 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:67 spVec is none
+curVar:-947.129822 minVar:340282346638528859811704183484516925440.000000
+minfea: 0 2893.000 -947.130
+depth: 4
+fea:6 spVec is none
+fea:7 spVec is none
+fea:5 spVec is none
+fea:68 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+curVar:-724.729919 minVar:340282346638528859811704183484516925440.000000
+curVar:-732.415039 minVar:-724.729919
+curVar:-733.629272 minVar:-732.415039
+curVar:-738.180603 minVar:-733.629272
+minfea: 85 3.500 -738.181
+depth: 4
+fea:68 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:83 spVec is none
+fea:67 spVec is none
+curVar:-239.173889 minVar:340282346638528859811704183484516925440.000000
+curVar:-246.665268 minVar:-239.173889
+minfea: 32 122432.000 -246.665
+depth: 3
+fea:7 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:83 spVec is none
+curVar:-1243.187988 minVar:340282346638528859811704183484516925440.000000
+minfea: 4 0.500 -1243.188
+depth: 4
+fea:7 spVec is none
+fea:4 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:83 spVec is none
+curVar:-733.841614 minVar:340282346638528859811704183484516925440.000000
+curVar:-735.432373 minVar:-733.841614
+curVar:-737.091797 minVar:-735.432373
+curVar:-737.370056 minVar:-737.091797
+minfea: 75 49823.500 -737.370
+depth: 4
+fea:7 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:83 spVec is none
+curVar:-522.936646 minVar:340282346638528859811704183484516925440.000000
+minfea: 3 5183.000 -522.937
+depth: 2
+fea:7 spVec is none
+fea:68 spVec is none
+fea:67 spVec is none
+fea:83 spVec is none
+curVar:-1643.158936 minVar:340282346638528859811704183484516925440.000000
+minfea: 5 0.500 -1643.159
+depth: 3
+fea:7 spVec is none
+fea:5 spVec is none
+fea:68 spVec is none
+fea:67 spVec is none
+fea:83 spVec is none
+curVar:-1636.733398 minVar:340282346638528859811704183484516925440.000000
+curVar:-1637.445312 minVar:-1636.733398
+curVar:-1638.478027 minVar:-1637.445312
+minfea: 58 193244.000 -1638.478
+depth: 4
+fea:7 spVec is none
+fea:5 spVec is none
+fea:68 spVec is none
+fea:67 spVec is none
+fea:83 spVec is none
+curVar:-1639.612427 minVar:340282346638528859811704183484516925440.000000
+curVar:-1640.241333 minVar:-1639.612427
+curVar:-1640.351807 minVar:-1640.241333
+minfea: 85 7.500 -1640.352
+depth: 4
+fea:6 spVec is none
+fea:21 spVec is none
+fea:7 spVec is none
+fea:24 spVec is none
+fea:14 spVec is none
+fea:16 spVec is none
+fea:17 spVec is none
+fea:35 spVec is none
+fea:3 spVec is none
+fea:5 spVec is none
+fea:45 spVec is none
+fea:56 spVec is none
+fea:66 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:69 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:83 spVec is none
+curVar:-3.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 0 4251.500 -3.000
+depth: 3
+fea:7 spVec is none
+fea:2 spVec is none
+fea:68 spVec is none
+fea:69 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:83 spVec is none
+curVar:-11.225806 minVar:340282346638528859811704183484516925440.000000
+curVar:-13.644385 minVar:-11.225806
+minfea: 26 90754.500 -13.644
+depth: 4
+fea:31 spVec is none
+fea:7 spVec is none
+fea:14 spVec is none
+fea:16 spVec is none
+fea:2 spVec is none
+fea:45 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:69 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:83 spVec is none
+curVar:-14.062500 minVar:340282346638528859811704183484516925440.000000
+minfea: 4 0.500 -14.062
+depth: 4
+fea:7 spVec is none
+fea:24 spVec is none
+fea:2 spVec is none
+fea:4 spVec is none
+fea:68 spVec is none
+fea:69 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+fea:81 spVec is none
+fea:83 spVec is none
+curVar:-1.190476 minVar:340282346638528859811704183484516925440.000000
+curVar:-1.385965 minVar:-1.190476
+minfea: 62 4844.500 -1.386
+-------------------------------------------------------------------------------------------
+show tree:
+1: 75:2.50 
+2: 85:7.50 66:0.50 
+3: 2:5102.00 62:2.50 85:7.50 5:0.50 
+4: 4:0.50 1:9851.00 85:15.50 85:12.50 0:2893.00 4:0.50 58:193244.00 26:90754.50 
+5: -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 
+cart main:0.486465
+1
+0 end : 0.613049983978
+--------------------------------------------------
+1
+sample: 34617 56
+data size:34617, fea dim:56
+depth: 0
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 3 595.000 -0.000
+depth: 1
+fea:3 spVec is none
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 4 0.500 -0.000
+depth: 2
+fea:3 spVec is none
+fea:4 spVec is none
+fea:7 spVec is none
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 6 0.500 -0.000
+depth: 3
+fea:3 spVec is none
+fea:4 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 9 0.500 -0.000
+depth: 4
+fea:3 spVec is none
+fea:4 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:9 spVec is none
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 13 -0.500 -0.000
+depth: 4
+fea:3 spVec is none
+fea:4 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 9 1.500 -0.000
+depth: 3
+fea:3 spVec is none
+fea:4 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 9 1.500 -0.000
+depth: 4
+fea:3 spVec is none
+fea:4 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:9 spVec is none
+fea:10 spVec is none
+fea:88 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 13 -0.500 -0.000
+depth: 4
+fea:3 spVec is none
+fea:4 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 9 2.500 -0.000
+depth: 2
+fea:3 spVec is none
+fea:4 spVec is none
+fea:6 spVec is none
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 7 0.500 -0.000
+depth: 3
+fea:3 spVec is none
+fea:4 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 9 1.500 -0.000
+depth: 4
+fea:3 spVec is none
+fea:4 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:9 spVec is none
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 13 -0.500 -0.000
+depth: 4
+fea:13 spVec is none
+fea:14 spVec is none
+fea:16 spVec is none
+fea:3 spVec is none
+fea:4 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 9 2.500 -0.000
+depth: 3
+fea:3 spVec is none
+fea:13 spVec is none
+fea:21 spVec is none
+fea:14 spVec is none
+fea:4 spVec is none
+fea:29 spVec is none
+fea:22 spVec is none
+fea:23 spVec is none
+fea:32 spVec is none
+fea:24 spVec is none
+fea:33 spVec is none
+fea:34 spVec is none
+fea:38 spVec is none
+fea:25 spVec is none
+fea:6 spVec is none
+fea:36 spVec is none
+fea:7 spVec is none
+fea:39 spVec is none
+fea:26 spVec is none
+fea:37 spVec is none
+fea:40 spVec is none
+fea:9 spVec is none
+fea:16 spVec is none
+fea:10 spVec is none
+fea:42 spVec is none
+fea:18 spVec is none
+fea:43 spVec is none
+fea:19 spVec is none
+fea:20 spVec is none
+fea:44 spVec is none
+fea:46 spVec is none
+fea:48 spVec is none
+fea:50 spVec is none
+fea:55 spVec is none
+fea:66 spVec is none
+fea:51 spVec is none
+fea:78 spVec is none
+fea:56 spVec is none
+fea:71 spVec is none
+fea:52 spVec is none
+fea:79 spVec is none
+fea:57 spVec is none
+fea:72 spVec is none
+fea:53 spVec is none
+fea:60 spVec is none
+fea:73 spVec is none
+fea:85 spVec is none
+fea:62 spVec is none
+fea:88 spVec is none
+fea:75 spVec is none
+fea:65 spVec is none
+fea:76 spVec is none
+fea:89 spVec is none
+fea:90 spVec is none
+fea:92 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 91 0.500 -0.000
+depth: 4
+depth: 4
+fea:13 spVec is none
+fea:14 spVec is none
+fea:3 spVec is none
+fea:16 spVec is none
+fea:4 spVec is none
+fea:6 spVec is none
+fea:18 spVec is none
+fea:7 spVec is none
+fea:19 spVec is none
+fea:9 spVec is none
+fea:20 spVec is none
+fea:10 spVec is none
+fea:21 spVec is none
+fea:29 spVec is none
+fea:22 spVec is none
+fea:32 spVec is none
+fea:33 spVec is none
+fea:23 spVec is none
+fea:34 spVec is none
+fea:24 spVec is none
+fea:36 spVec is none
+fea:25 spVec is none
+fea:37 spVec is none
+fea:26 spVec is none
+fea:38 spVec is none
+fea:46 spVec is none
+fea:39 spVec is none
+fea:48 spVec is none
+fea:55 spVec is none
+fea:40 spVec is none
+fea:50 spVec is none
+fea:56 spVec is none
+fea:42 spVec is none
+fea:51 spVec is none
+fea:57 spVec is none
+fea:52 spVec is none
+fea:43 spVec is none
+fea:60 spVec is none
+fea:53 spVec is none
+fea:44 spVec is none
+fea:62 spVec is none
+fea:65 spVec is none
+fea:66 spVec is none
+fea:71 spVec is none
+fea:78 spVec is none
+fea:72 spVec is none
+fea:79 spVec is none
+fea:73 spVec is none
+fea:85 spVec is none
+fea:75 spVec is none
+fea:88 spVec is none
+fea:76 spVec is none
+fea:89 spVec is none
+fea:90 spVec is none
+fea:92 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 91 1.500 -0.000
+depth: 1
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 3 1267.000 -0.000
+depth: 2
+fea:3 spVec is none
+fea:13 spVec is none
+fea:14 spVec is none
+fea:16 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:20 spVec is none
+fea:10 spVec is none
+fea:52 spVec is none
+fea:88 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 4 2.500 -0.000
+depth: 3
+fea:3 spVec is none
+fea:13 spVec is none
+fea:4 spVec is none
+fea:14 spVec is none
+fea:16 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:10 spVec is none
+fea:20 spVec is none
+fea:52 spVec is none
+fea:88 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 9 1.500 -0.000
+depth: 4
+fea:21 spVec is none
+fea:13 spVec is none
+fea:3 spVec is none
+fea:22 spVec is none
+fea:14 spVec is none
+fea:4 spVec is none
+fea:16 spVec is none
+fea:23 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:9 spVec is none
+fea:10 spVec is none
+fea:20 spVec is none
+fea:34 spVec is none
+fea:52 spVec is none
+fea:42 spVec is none
+fea:43 spVec is none
+fea:44 spVec is none
+fea:56 spVec is none
+fea:66 spVec is none
+fea:88 spVec is none
+fea:65 spVec is none
+fea:90 spVec is none
+fea:91 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 18 -0.500 -0.000
+depth: 4
+fea:13 spVec is none
+fea:3 spVec is none
+fea:14 spVec is none
+fea:4 spVec is none
+fea:16 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:10 spVec is none
+fea:20 spVec is none
+fea:52 spVec is none
+fea:53 spVec is none
+fea:88 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 9 2.500 -0.000
+depth: 3
+fea:21 spVec is none
+fea:13 spVec is none
+fea:3 spVec is none
+fea:29 spVec is none
+fea:14 spVec is none
+fea:22 spVec is none
+fea:4 spVec is none
+fea:16 spVec is none
+fea:6 spVec is none
+fea:32 spVec is none
+fea:23 spVec is none
+fea:7 spVec is none
+fea:33 spVec is none
+fea:24 spVec is none
+fea:9 spVec is none
+fea:34 spVec is none
+fea:10 spVec is none
+fea:25 spVec is none
+fea:18 spVec is none
+fea:38 spVec is none
+fea:36 spVec is none
+fea:26 spVec is none
+fea:19 spVec is none
+fea:20 spVec is none
+fea:39 spVec is none
+fea:37 spVec is none
+fea:40 spVec is none
+fea:42 spVec is none
+fea:66 spVec is none
+fea:46 spVec is none
+fea:43 spVec is none
+fea:55 spVec is none
+fea:44 spVec is none
+fea:71 spVec is none
+fea:56 spVec is none
+fea:48 spVec is none
+fea:72 spVec is none
+fea:57 spVec is none
+fea:50 spVec is none
+fea:73 spVec is none
+fea:60 spVec is none
+fea:51 spVec is none
+fea:75 spVec is none
+fea:78 spVec is none
+fea:62 spVec is none
+fea:52 spVec is none
+fea:76 spVec is none
+fea:65 spVec is none
+fea:79 spVec is none
+fea:53 spVec is none
+fea:85 spVec is none
+fea:88 spVec is none
+fea:89 spVec is none
+fea:92 spVec is none
+fea:90 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 91 1.500 -0.000
+depth: 4
+depth: 4
+depth: 2
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 3 1377.000 -0.000
+depth: 3
+fea:3 spVec is none
+fea:13 spVec is none
+fea:14 spVec is none
+fea:7 spVec is none
+fea:9 spVec is none
+fea:10 spVec is none
+fea:56 spVec is none
+fea:72 spVec is none
+fea:52 spVec is none
+fea:75 spVec is none
+fea:76 spVec is none
+fea:44 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 4 1.500 -0.000
+depth: 4
+fea:3 spVec is none
+fea:13 spVec is none
+fea:14 spVec is none
+fea:4 spVec is none
+fea:23 spVec is none
+fea:6 spVec is none
+fea:33 spVec is none
+fea:7 spVec is none
+fea:34 spVec is none
+fea:19 spVec is none
+fea:9 spVec is none
+fea:25 spVec is none
+fea:20 spVec is none
+fea:36 spVec is none
+fea:10 spVec is none
+fea:26 spVec is none
+fea:37 spVec is none
+fea:38 spVec is none
+fea:55 spVec is none
+fea:39 spVec is none
+fea:56 spVec is none
+fea:40 spVec is none
+fea:50 spVec is none
+fea:42 spVec is none
+fea:51 spVec is none
+fea:52 spVec is none
+fea:44 spVec is none
+fea:71 spVec is none
+fea:72 spVec is none
+fea:73 spVec is none
+fea:75 spVec is none
+fea:88 spVec is none
+fea:76 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 16 0.500 -0.000
+depth: 4
+fea:3 spVec is none
+fea:13 spVec is none
+fea:14 spVec is none
+fea:4 spVec is none
+fea:16 spVec is none
+fea:6 spVec is none
+fea:7 spVec is none
+fea:9 spVec is none
+fea:10 spVec is none
+fea:66 spVec is none
+fea:56 spVec is none
+fea:72 spVec is none
+fea:52 spVec is none
+fea:44 spVec is none
+fea:75 spVec is none
+fea:76 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 18 -0.500 -0.000
+depth: 3
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 3 1577.500 -0.000
+depth: 4
+fea:3 spVec is none
+fea:14 spVec is none
+fea:16 spVec is none
+fea:7 spVec is none
+fea:24 spVec is none
+fea:34 spVec is none
+fea:9 spVec is none
+fea:10 spVec is none
+fea:20 spVec is none
+fea:55 spVec is none
+fea:66 spVec is none
+fea:56 spVec is none
+fea:44 spVec is none
+fea:53 spVec is none
+fea:65 spVec is none
+fea:92 spVec is none
+fea:88 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 4 1.500 -0.000
+depth: 4
+fea:10 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 3 1766.000 -0.000
+-------------------------------------------------------------------------------------------
+show tree:
+1: 3:595.00 
+2: 4:0.50 3:1267.00 
+3: 6:0.50 7:0.50 4:2.50 3:1377.00 
+4: 9:0.50 9:1.50 9:1.50 91:0.50 9:1.50 91:1.50 4:1.50 3:1577.50 
+5: -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 
+cart main:0.508674
+0
+1 end : 0.632033824921
+--------------------------------------------------
+2
+sample: 34617 56
+data size:34617, fea dim:56
+depth: 0
+fea:10 spVec is none
+fea:67 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 0 595.000 -0.000
+depth: 1
+fea:7 spVec is none
+fea:0 spVec is none
+fea:1 spVec is none
+fea:2 spVec is none
+fea:3 spVec is none
+fea:10 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:67 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 8 0.500 -0.000
+depth: 2
+fea:7 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:1 spVec is none
+fea:9 spVec is none
+fea:10 spVec is none
+fea:20 spVec is none
+fea:2 spVec is none
+fea:3 spVec is none
+fea:23 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:41 spVec is none
+fea:69 spVec is none
+fea:66 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 11 150.000 -0.000
+depth: 3
+fea:7 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:17 spVec is none
+fea:1 spVec is none
+fea:9 spVec is none
+fea:19 spVec is none
+fea:10 spVec is none
+fea:20 spVec is none
+fea:2 spVec is none
+fea:11 spVec is none
+fea:21 spVec is none
+fea:3 spVec is none
+fea:23 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:57 spVec is none
+fea:41 spVec is none
+fea:53 spVec is none
+fea:66 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:69 spVec is none
+fea:78 spVec is none
+fea:90 spVec is none
+fea:80 spVec is none
+fea:71 spVec is none
+fea:72 spVec is none
+fea:73 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 13 0.500 -0.000
+depth: 4
+fea:7 spVec is none
+fea:16 spVec is none
+fea:0 spVec is none
+fea:17 spVec is none
+fea:8 spVec is none
+fea:19 spVec is none
+fea:9 spVec is none
+fea:1 spVec is none
+fea:10 spVec is none
+fea:20 spVec is none
+fea:21 spVec is none
+fea:11 spVec is none
+fea:2 spVec is none
+fea:23 spVec is none
+fea:3 spVec is none
+fea:13 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:57 spVec is none
+fea:41 spVec is none
+fea:53 spVec is none
+fea:69 spVec is none
+fea:66 spVec is none
+fea:67 spVec is none
+fea:71 spVec is none
+fea:68 spVec is none
+fea:72 spVec is none
+fea:73 spVec is none
+fea:78 spVec is none
+fea:90 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 26 103731.500 -0.000
+depth: 4
+fea:7 spVec is none
+fea:16 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:17 spVec is none
+fea:1 spVec is none
+fea:9 spVec is none
+fea:19 spVec is none
+fea:10 spVec is none
+fea:20 spVec is none
+fea:2 spVec is none
+fea:32 spVec is none
+fea:11 spVec is none
+fea:21 spVec is none
+fea:3 spVec is none
+fea:13 spVec is none
+fea:23 spVec is none
+fea:5 spVec is none
+fea:35 spVec is none
+fea:6 spVec is none
+fea:39 spVec is none
+fea:57 spVec is none
+fea:40 spVec is none
+fea:41 spVec is none
+fea:69 spVec is none
+fea:42 spVec is none
+fea:53 spVec is none
+fea:66 spVec is none
+fea:71 spVec is none
+fea:67 spVec is none
+fea:72 spVec is none
+fea:55 spVec is none
+fea:68 spVec is none
+fea:73 spVec is none
+fea:78 spVec is none
+fea:90 spVec is none
+fea:79 spVec is none
+fea:93 spVec is none
+fea:80 spVec is none
+fea:89 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 26 105389.500 -0.000
+depth: 3
+fea:7 spVec is none
+fea:8 spVec is none
+fea:0 spVec is none
+fea:9 spVec is none
+fea:10 spVec is none
+fea:1 spVec is none
+fea:20 spVec is none
+fea:32 spVec is none
+fea:11 spVec is none
+fea:2 spVec is none
+fea:23 spVec is none
+fea:3 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:69 spVec is none
+fea:41 spVec is none
+fea:50 spVec is none
+fea:66 spVec is none
+fea:67 spVec is none
+fea:55 spVec is none
+fea:68 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 13 1.500 -0.000
+depth: 4
+fea:7 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:1 spVec is none
+fea:9 spVec is none
+fea:19 spVec is none
+fea:10 spVec is none
+fea:2 spVec is none
+fea:32 spVec is none
+fea:20 spVec is none
+fea:11 spVec is none
+fea:3 spVec is none
+fea:13 spVec is none
+fea:5 spVec is none
+fea:23 spVec is none
+fea:6 spVec is none
+fea:69 spVec is none
+fea:41 spVec is none
+fea:50 spVec is none
+fea:66 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:55 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 16 0.500 -0.000
+depth: 4
+depth: 2
+fea:7 spVec is none
+fea:0 spVec is none
+fea:1 spVec is none
+fea:2 spVec is none
+fea:10 spVec is none
+fea:3 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:67 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 8 1.500 -0.000
+depth: 3
+fea:7 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:1 spVec is none
+fea:2 spVec is none
+fea:10 spVec is none
+fea:3 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 9 1.500 -0.000
+depth: 4
+fea:7 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:1 spVec is none
+fea:9 spVec is none
+fea:2 spVec is none
+fea:10 spVec is none
+fea:3 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 11 0.500 -0.000
+depth: 4
+fea:7 spVec is none
+fea:16 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:17 spVec is none
+fea:1 spVec is none
+fea:19 spVec is none
+fea:10 spVec is none
+fea:20 spVec is none
+fea:2 spVec is none
+fea:11 spVec is none
+fea:21 spVec is none
+fea:3 spVec is none
+fea:13 spVec is none
+fea:35 spVec is none
+fea:23 spVec is none
+fea:5 spVec is none
+fea:36 spVec is none
+fea:6 spVec is none
+fea:38 spVec is none
+fea:39 spVec is none
+fea:48 spVec is none
+fea:40 spVec is none
+fea:57 spVec is none
+fea:49 spVec is none
+fea:69 spVec is none
+fea:41 spVec is none
+fea:50 spVec is none
+fea:42 spVec is none
+fea:53 spVec is none
+fea:63 spVec is none
+fea:71 spVec is none
+fea:72 spVec is none
+fea:67 spVec is none
+fea:47 spVec is none
+fea:55 spVec is none
+fea:73 spVec is none
+fea:68 spVec is none
+fea:75 spVec is none
+fea:78 spVec is none
+fea:90 spVec is none
+fea:79 spVec is none
+fea:93 spVec is none
+fea:80 spVec is none
+fea:85 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 9 2.500 -0.000
+depth: 3
+fea:7 spVec is none
+fea:0 spVec is none
+fea:1 spVec is none
+fea:2 spVec is none
+fea:10 spVec is none
+fea:3 spVec is none
+fea:11 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:67 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 8 2.500 -0.000
+depth: 4
+fea:7 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:1 spVec is none
+fea:2 spVec is none
+fea:10 spVec is none
+fea:3 spVec is none
+fea:11 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 9 1.500 -0.000
+depth: 4
+fea:7 spVec is none
+fea:0 spVec is none
+fea:1 spVec is none
+fea:10 spVec is none
+fea:2 spVec is none
+fea:11 spVec is none
+fea:3 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 8 3.500 -0.000
+depth: 1
+fea:10 spVec is none
+fea:80 spVec is none
+fea:67 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 0 1267.000 -0.000
+depth: 2
+fea:7 spVec is none
+fea:0 spVec is none
+fea:1 spVec is none
+fea:2 spVec is none
+fea:10 spVec is none
+fea:3 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:69 spVec is none
+fea:41 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 8 1.500 -0.000
+depth: 3
+fea:7 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:9 spVec is none
+fea:1 spVec is none
+fea:10 spVec is none
+fea:2 spVec is none
+fea:3 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:41 spVec is none
+fea:69 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 11 0.500 -0.000
+depth: 4
+fea:7 spVec is none
+fea:16 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:26 spVec is none
+fea:17 spVec is none
+fea:1 spVec is none
+fea:9 spVec is none
+fea:31 spVec is none
+fea:19 spVec is none
+fea:10 spVec is none
+fea:20 spVec is none
+fea:2 spVec is none
+fea:32 spVec is none
+fea:11 spVec is none
+fea:21 spVec is none
+fea:3 spVec is none
+fea:35 spVec is none
+fea:13 spVec is none
+fea:23 spVec is none
+fea:5 spVec is none
+fea:36 spVec is none
+fea:6 spVec is none
+fea:38 spVec is none
+fea:39 spVec is none
+fea:57 spVec is none
+fea:48 spVec is none
+fea:40 spVec is none
+fea:59 spVec is none
+fea:63 spVec is none
+fea:41 spVec is none
+fea:49 spVec is none
+fea:66 spVec is none
+fea:42 spVec is none
+fea:67 spVec is none
+fea:50 spVec is none
+fea:68 spVec is none
+fea:43 spVec is none
+fea:53 spVec is none
+fea:47 spVec is none
+fea:54 spVec is none
+fea:69 spVec is none
+fea:55 spVec is none
+fea:78 spVec is none
+fea:70 spVec is none
+fea:79 spVec is none
+fea:71 spVec is none
+fea:80 spVec is none
+fea:90 spVec is none
+fea:72 spVec is none
+fea:73 spVec is none
+fea:84 spVec is none
+fea:93 spVec is none
+fea:75 spVec is none
+fea:85 spVec is none
+fea:89 spVec is none
+minfea: -1 340282346638528859811704183484516925440.000 340282346638528859811704183484516925440.000
+depth: 4
+fea:7 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:9 spVec is none
+fea:1 spVec is none
+fea:10 spVec is none
+fea:2 spVec is none
+fea:3 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:41 spVec is none
+fea:69 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 11 50.500 -0.000
+depth: 3
+fea:7 spVec is none
+fea:16 spVec is none
+fea:0 spVec is none
+fea:1 spVec is none
+fea:10 spVec is none
+fea:20 spVec is none
+fea:2 spVec is none
+fea:11 spVec is none
+fea:3 spVec is none
+fea:13 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:41 spVec is none
+fea:69 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 8 2.500 -0.000
+depth: 4
+fea:7 spVec is none
+fea:16 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:1 spVec is none
+fea:9 spVec is none
+fea:10 spVec is none
+fea:20 spVec is none
+fea:2 spVec is none
+fea:11 spVec is none
+fea:3 spVec is none
+fea:13 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:69 spVec is none
+fea:41 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 17 50.000 -0.000
+depth: 4
+fea:7 spVec is none
+fea:16 spVec is none
+fea:0 spVec is none
+fea:17 spVec is none
+fea:26 spVec is none
+fea:1 spVec is none
+fea:31 spVec is none
+fea:19 spVec is none
+fea:10 spVec is none
+fea:2 spVec is none
+fea:20 spVec is none
+fea:32 spVec is none
+fea:3 spVec is none
+fea:11 spVec is none
+fea:21 spVec is none
+fea:5 spVec is none
+fea:13 spVec is none
+fea:23 spVec is none
+fea:6 spVec is none
+fea:39 spVec is none
+fea:40 spVec is none
+fea:69 spVec is none
+fea:41 spVec is none
+fea:53 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:72 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 8 3.500 -0.000
+depth: 2
+fea:10 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 0 1377.000 -0.000
+depth: 3
+fea:7 spVec is none
+fea:0 spVec is none
+fea:1 spVec is none
+fea:2 spVec is none
+fea:3 spVec is none
+fea:10 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:69 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 8 1.500 -0.000
+depth: 4
+fea:7 spVec is none
+fea:0 spVec is none
+fea:8 spVec is none
+fea:1 spVec is none
+fea:9 spVec is none
+fea:10 spVec is none
+fea:2 spVec is none
+fea:3 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:69 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 11 50.000 -0.000
+depth: 4
+fea:7 spVec is none
+fea:16 spVec is none
+fea:0 spVec is none
+fea:1 spVec is none
+fea:10 spVec is none
+fea:11 spVec is none
+fea:2 spVec is none
+fea:13 spVec is none
+fea:3 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:69 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 8 2.500 -0.000
+depth: 3
+fea:10 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 0 1577.500 -0.000
+depth: 4
+fea:7 spVec is none
+fea:0 spVec is none
+fea:1 spVec is none
+fea:10 spVec is none
+fea:2 spVec is none
+fea:3 spVec is none
+fea:5 spVec is none
+fea:6 spVec is none
+fea:41 spVec is none
+fea:69 spVec is none
+fea:80 spVec is none
+fea:67 spVec is none
+fea:68 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 8 1.500 -0.000
+depth: 4
+fea:10 spVec is none
+fea:67 spVec is none
+fea:80 spVec is none
+curVar:-0.000000 minVar:340282346638528859811704183484516925440.000000
+minfea: 0 1766.000 -0.000
+-------------------------------------------------------------------------------------------
+show tree:
+1: 0:595.00 
+2: 8:0.50 0:1267.00 
+3: 11:150.00 8:1.50 8:1.50 0:1377.00 
+4: 13:0.50 13:1.50 9:1.50 8:2.50 11:0.50 8:2.50 8:1.50 0:1577.50 
+5: -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 -1:0.00 
+cart main:0.481927
+0
+2 end : 0.593836069107
