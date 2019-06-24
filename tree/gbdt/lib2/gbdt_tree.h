@@ -1469,6 +1469,7 @@ void* threadFeaGroupV2(void* param_ptr) {
             int _idx = 0;
             for (int j = 0; j < dataLen; ++j) {
                 Block& block = sortId->at(j);
+                // Block* block = &sortId->at(j);
                 if (itemVec[block.id] <= 0) { continue; }
                 for (int k = 0; k < itemVec[block.id]; ++k) {
                     feaDataVec[_idx] = block.fea;

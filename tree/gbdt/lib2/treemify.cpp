@@ -860,6 +860,8 @@ static PyObject * tree_gbdt(PyObject *self, PyObject *args) {
     // vector<TreeNode*> trees(trainConf.treeSize);
     vector<TreeNode*> trees;
 
+    vector<float> innerPreds(trainConf.dataSize, 0.0f);
+
     for (int i = 0; i < trainConf.treeSize; ++i) {
         printf("run 1.0\n");
         // 采样
@@ -887,9 +889,20 @@ static PyObject * tree_gbdt(PyObject *self, PyObject *args) {
             for (size_t k = 0; k < dim; ++k) {
                 feas[k] = data.at(j, k);
             }
+            /*
             // predVec[j] = boostPredict(trees, feas, 0.0);
             // predVec[j] = predTransform(predVec[j]);
             float pred = boostPredict(trees, feas, 0.0);
+            pred = predTransform(pred);
+            predVec[j] = data.at(j, trainConf.colWidth - 1) - pred;
+            */
+
+            float pred = predict(root, feas);
+            if (j <= 0) {
+                innerPreds[j] = 0.0f + pred;
+            } else {
+                innerPreds[j] = innerPreds[j] + pred;
+            }
             pred = predTransform(pred);
             predVec[j] = data.at(j, trainConf.colWidth - 1) - pred;
         }
