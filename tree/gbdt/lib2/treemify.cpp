@@ -4,7 +4,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
-#include <math.h>
+#include <stdlib.h>
 
 #include "common.h"
 #include "myutil.h"
@@ -13,6 +13,7 @@
 #include "sample.h"
 #include "xgboost_tree.h"
 #include "gbdt_tree.h"
+#include "parallel_util.h"
 
 
 using namespace std;
@@ -791,7 +792,10 @@ int _comp_(const Block& a, const Block& b) {
 }
 
 void preSort_(Matrix* data, int feaSize,
-              map<int, vector<Block>*>* sortIdMap) {
+              map<int, vector<Block>*>* sortIdMap,
+              map<int, Block*>* p_sortIdMap,
+              map<int, int*>* p_sort2IdMap,
+              float* _predVec) {
     double begin = getTime();
     // 预排序
     for (size_t _i = 0; _i < feaSize; ++_i) {
@@ -803,6 +807,7 @@ void preSort_(Matrix* data, int feaSize,
             tmp.id    = i;
             tmp.fea   = data->at(i, fea);
             tmp.label = data->at(i, data->getRange() - 1);
+            // tmp._label = &_predVec[i];
             sortIdVec->push_back(tmp);
         }
 
@@ -810,6 +815,18 @@ void preSort_(Matrix* data, int feaSize,
 
         // sortIdMap->at(fea) = sortIdVec;
         sortIdMap->insert(make_pair(fea, sortIdVec));
+
+        Block* sortId_p = new Block[data->length()];
+        for (int i = 0; i < data->length(); ++i) {
+            sortId_p[i] = sortIdVec->at(i);
+        }
+        p_sortIdMap->insert(make_pair(fea, sortId_p));
+
+        int* sort2Ids = new int[data->length()];
+        for (int i = 0; i < data->length(); ++i) {
+            sort2Ids[sortIdVec->at(i).id] = i;
+        }
+        p_sort2IdMap->insert(make_pair(fea, sort2Ids));
     }
     printf("presort:%lf\n", getTime() - begin);
 }
@@ -821,7 +838,6 @@ static PyObject * tree_gbdt(PyObject *self, PyObject *args) {
     if (!PyArg_ParseTuple(args, "OO", &data_raw, &train_conf_raw)) {
         return NULL;
     }
-
 
     // 解析配置
     // TrainConf trainConf;
@@ -843,9 +859,11 @@ static PyObject * tree_gbdt(PyObject *self, PyObject *args) {
 
     vector<float> predVec;
     predVec.resize(trainConf.rowWidth);
+    float* _predVec = new float[trainConf.rowWidth];
     for (size_t i = 0; i < trainConf.rowWidth; ++i) {
         // predVec[i] = 0.5;
         predVec[i] = data.at(i, trainConf.colWidth - 1);
+        // _predVec[i] = data.at(i, trainConf.colWidth - 1);
     }
 
     // map<int, vector<int> > sortIdMap;
@@ -853,7 +871,10 @@ static PyObject * tree_gbdt(PyObject *self, PyObject *args) {
     // preSort(data, trainConf.dimSize, sortIdMap, sortIdMap_p);
 
     map<int, vector<Block>*>* sortIdMap_p = new map<int, vector<Block>*>();
-    preSort_(data_, trainConf.dimSize, sortIdMap_p);
+    map<int, Block*>* p_sortIdMap_p = new map<int, Block*>();
+    map<int, int*>* p_sort2IdMap = new map<int, int*>();
+    // preSort_(data_, trainConf.dimSize, sortIdMap_p);
+    preSort_(data_, trainConf.dimSize, sortIdMap_p, p_sortIdMap_p, p_sort2IdMap, _predVec);
 
     printf("run 1\n");
 
@@ -862,53 +883,107 @@ static PyObject * tree_gbdt(PyObject *self, PyObject *args) {
 
     vector<float> innerPreds(trainConf.dataSize, 0.0f);
 
+    StaInfo* staInfo = new StaInfo();
+    staInfo->feaImprove = new float[trainConf.dimSize];
+    staInfo->feaSelect  = new int[trainConf.dimSize];
+    memset(staInfo->feaImprove, 0, sizeof(float) * trainConf.dimSize);
+    memset(staInfo->feaSelect,  0, sizeof(float) * trainConf.dimSize);
+
     for (int i = 0; i < trainConf.treeSize; ++i) {
         printf("run 1.0\n");
+        double begin = getTime();
+
         // 采样
-        vector<int> itemVec = rowSample(trainConf.dataSize, trainConf.rowSample);
-        vector<int> feaVec  = columnSample(trainConf.dimSize, trainConf.colSample);
+        vector<int> itemVec;
+        rowSample(trainConf.rowSample, trainConf.dataSize, itemVec);
+        vector<int> feaVec;
+        columnSample(trainConf.colSample, trainConf.dimSize, feaVec);
+
+        printf("feaList: ");
+        for (int _i = 0; _i < trainConf.dimSize; ++_i) {
+            printf("%d ", feaVec[_i]);
+        }
+        printf("\n");
+
         int feaSize = 0;
         for (int _i = 0; _i < feaVec.size(); ++_i) {
             feaSize += feaVec[_i];
         }
-        printf("main feaSize:%d\n", feaSize);
+        printf("use feaSize:%d\n", feaSize);
+        printf("sample:%lf\n", getTime() - begin);
 
         printf("run 2\n");
         
-        double begin = getTime();
         // 建树
         // TreeNode* root = gbdt_main(data, sortIdMap_p, predVec, itemVec, feaVec);
-        TreeNode* root = gbdt_main(data_, sortIdMap_p, predVec, itemVec, feaVec);
-        printf("gbdt main:%lf\n", getTime() - begin);
+        // TreeNode* root = gbdt_main(data_, sortIdMap_p, predVec, itemVec, feaVec);
+        TreeNode* root = gbdt_main(data_, sortIdMap_p, p_sortIdMap_p, p_sort2IdMap, predVec, itemVec, feaVec, staInfo);
+        printf("gbdt_main:%lf\n", getTime() - begin);
 
         printf("run 3\n");
         trees.push_back(root); 
+
+        double pred_begin = getTime();
         int dim = trainConf.dimSize;
+
+        parallel_predict(data_, root, 6, dim, trainConf.shrink, innerPreds, predVec);
+
         for (size_t j = 0; j < trainConf.dataSize; ++j) {
-            float feas[dim];
-            for (size_t k = 0; k < dim; ++k) {
-                feas[k] = data.at(j, k);
-            }
-            /*
+            predVec[j] *= trainConf.shrink;
+        }
+
+        /*
+        for (size_t j = 0; j < trainConf.dataSize; ++j) {
+            // float feas[dim];
+            // for (size_t k = 0; k < dim; ++k) {
+            //     feas[k] = data.at(j, k);
+            // }
             // predVec[j] = boostPredict(trees, feas, 0.0);
             // predVec[j] = predTransform(predVec[j]);
-            float pred = boostPredict(trees, feas, 0.0);
-            pred = predTransform(pred);
-            predVec[j] = data.at(j, trainConf.colWidth - 1) - pred;
-            */
 
+            // float pred = boostPredict(trees, feas, 0.0);
+            // pred = predTransform(pred);
+            // predVec[j] = data.at(j, trainConf.colWidth - 1) - pred;
+
+            float* feas = data.getRow(j);
             float pred = predict(root, feas);
-            if (j <= 0) {
+            if (i <= 0) {
                 innerPreds[j] = 0.0f + pred;
             } else {
                 innerPreds[j] = innerPreds[j] + pred;
             }
             pred = predTransform(pred);
             predVec[j] = data.at(j, trainConf.colWidth - 1) - pred;
+            _predVec[j] = data.at(j, trainConf.colWidth - 1) - pred;
         }
+        */
+        printf("predict:%lf\n", getTime() - pred_begin);
 
-        printf("tree main:%lf\n", getTime() - begin);
+        double _begin = getTime();
+        /*
+        for (int _i = 0; _i < trainConf.dimSize; ++_i) {
+            vector<Block>* sortIdVec = (*sortIdMap_p)[_i];
+            for (int _j = 0; _j < sortIdVec->size(); ++_j) {
+                sortIdVec->at(_j).label = predVec[sortIdVec->at(_j).id];
+            }
+
+            Block* sortIds = (*p_sortIdMap_p)[_i];
+            for (int _j = 0; _j < predVec.size(); ++_j) {
+                sortIds[_j].label = predVec[sortIds[_j].id];
+            }
+        }
+        */
+
+        parallel_refresh(data_, p_sortIdMap_p, dim, 6, predVec);
+    
+        printf("label:%lf\n", getTime() - _begin);
+
+        printf("tree_main:%lf\n", getTime() - begin);
         printf("run 3.4\n");
+    }
+
+    for (int _i = 0; _i < trainConf.dimSize; ++_i) {
+        printf("feature:%d\t%.2lf\t%d\n", _i, staInfo->feaImprove[_i], staInfo->feaSelect[_i]);
     }
 
     /*
@@ -924,7 +999,7 @@ static PyObject * tree_gbdt(PyObject *self, PyObject *args) {
     for (int idx = 0; idx < trainConf.treeSize; ++idx) {
         // 二叉树转换成一维数据表示
         // int tree_size = pow(2, 5) - 1;
-        int tree_size = pow(2, trainConf.maxDepth) - 1;
+        int tree_size = std::pow(2, double(trainConf.maxDepth)) - 1;
 
         TreeNode* tree[tree_size];
         for (int i = 0; i < tree_size; ++i) {
@@ -941,6 +1016,14 @@ static PyObject * tree_gbdt(PyObject *self, PyObject *args) {
         }
         PyTuple_SetItem(pArgs, idx, pTree);
     }
+
+    // free new param
+    for (int idx = 0; idx < trainConf.treeSize; ++idx) {
+        printf("free tree before:%d\n", idx);
+        freeTree(trees[idx]);
+        printf("free tree:%d\n", idx);
+    }
+    
     return Py_BuildValue("O", pArgs);
 }
 
@@ -1021,7 +1104,7 @@ static PyObject * tree_xgboost_gbm(PyObject *self, PyObject *args) {
     for (int idx = 0; idx < trainConf.treeSize; ++idx) {
         // 二叉树转换成一维数据表示
         // int tree_size = pow(2, 5) - 1;
-        int tree_size = pow(2, trainConf.maxDepth) - 1;
+        int tree_size = (int)std::pow(2, double(trainConf.maxDepth)) - 1;
 
         TreeNode* tree[tree_size];
         for (int i = 0; i < tree_size; ++i) {
@@ -1092,7 +1175,7 @@ static PyObject * tree_xgboost(PyObject *self, PyObject *args) {
 
     // 二叉树转换成一维数据表示
     // int tree_size = pow(2, 5) - 1;
-    int tree_size = pow(2, trainConf.maxDepth) - 1;
+    int tree_size = (int)pow(2, double(trainConf.maxDepth)) - 1;
 
     TreeNode* tree[tree_size];
     for (int i = 0; i < tree_size; ++i) {

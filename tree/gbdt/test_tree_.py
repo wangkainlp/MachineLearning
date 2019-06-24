@@ -6,7 +6,7 @@ sys.path.append('..')
 import time
 import random as rand
 import gbm
-from TreeSVG import TreeSVG
+# from TreeSVG import TreeSVG
 
 conf = {}
 conf['rate'] = 0.8
@@ -50,9 +50,9 @@ if __name__ == '__main__':
             'sample_rate'    : 0.8,   \
             'col_sample'     : 0.8,   \
             'row_sample'     : 0.7,   \
-            'tree_size'      : 5,     \
-            'shrink'         : 0.03,    \
-            'max_depth'      : 10,       \
+            'tree_size'      : 10,     \
+            'shrink'         : 0.02,    \
+            'max_depth'      : 12,       \
             'min_cover_num'  : 30,      \
             'min_gain'       : 0.01,    \
             'lambda'         : 0.001,   \

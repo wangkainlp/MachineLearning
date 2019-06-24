@@ -14,12 +14,12 @@ public:
 
         size = row * col;
         int size = (int)PyList_Size(data_raw);
-        this->p_data = (float *)malloc(sizeof(float) * size); 
+        this->p_data = (float *)malloc(sizeof(float) * size);
         for (int i = 0; i < size; ++i) {
             this->p_data[i] = (float)PyFloat_AsDouble( PyList_GetItem(data_raw, i) );
         }
 
-        this->p_data_row_idx = (float**)malloc(sizeof(float*) * row); 
+        this->p_data_row_idx = (float**)malloc(sizeof(float*) * row);
 
         float* ptr = this->p_data;
         for (int i = 0; i < row; ++i) {
@@ -44,6 +44,10 @@ public:
 
     int getRange() {
         return this->span;
+    }
+
+    float* getRow(int x) {
+        return *(this->p_data_row_idx + x);
     }
 
     float at(int x, int y) {

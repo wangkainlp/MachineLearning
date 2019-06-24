@@ -52,8 +52,24 @@ public:
     int size;
     int* itemIds;
     int id;
-    
+
 };
+
+void freeTree(TreeNode* root) {
+    if (root == NULL) {
+        return;
+    }
+
+    TreeNode* curNode = root;
+    if (curNode->left == NULL && curNode->right == NULL) {
+        //
+    } else {
+        freeTree(curNode->left);
+        freeTree(curNode->right);
+    }
+    // free(curNode->itemIds);
+    delete curNode;
+}
 
 float predict(TreeNode* root, float* feas) {
     TreeNode* curNode = root;
@@ -72,7 +88,7 @@ float predict(TreeNode* root, float* feas) {
     }
 }
 
-float boostPredict(vector<TreeNode*>& trees, float* feas, float eta) { 
+float boostPredict(vector<TreeNode*>& trees, float* feas, float eta) {
     float pred = 0.0f;
     for(size_t i = 0; i < trees.size(); ++i) {
         // pred += predict(trees[i]) * eta;

@@ -3,10 +3,14 @@
 
 #include <pthread.h>
 #include <vector>
+#include <memory>
 #include <map>
+#include <cmath>
 #include "tree_node.h"
 #include "data.h"
 #include "loss.h"
+
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void _findBestSpV2_1_(Matrix& data, map<int, vector<int> >& sortIdMap,
                          vector<float> predVec,
@@ -429,9 +433,14 @@ TreeNode* _xgboostLoop_(Matrix& data, map<int, vector<int> >& sortIdMap, vector<
 
 /* ========================================================================================================= */
 
+typedef struct StaInfo {
+	float* feaImprove;
+	int* feaSelect;
+}StaInfo;
 
 typedef struct Block {
-    float id;
+    // float id;
+    int   id;
     float fea;
     float label;
 }Block;
@@ -455,15 +464,28 @@ struct Param {
 struct ParamLevel {
     Matrix* data;
     map<int, vector<Block>*>* sortIdMap;
+    map<int, Block*>* p_sortIdMap;
+	map<int, int*>* p_sort2IdMap;
     vector<int>* itemVec;
     vector<int>* feaVec;
     vector<float>* predVec;
     int groupId;
     int step;
+	int start;
+	int end;
     vector<TreeNode*>* nodes;
     vector<int>* minFea;
     vector<float>* minSp;
     vector<float>* minVar;
+    vector<float>* improve;
+
+	float* feaDataVec;
+	float* labelDataVec;
+	float** _labelDataVec;
+	float* spVec;
+	int8_t* itemMask;
+
+	StaInfo* staInfo;
 };
 
 TreeNode* constructTreeNodeV1(vector<int>& itemVec, Matrix* data, vector<float>* predVec) {
@@ -487,8 +509,6 @@ TreeNode* constructTreeNodeV1(vector<int>& itemVec, Matrix* data, vector<float>*
 
     return newNode;
 }
-
-
 
 TreeNode* constructTreeNode(vector<int>& itemVec, Matrix* data, vector<float>* predVec) {
     TreeNode* newNode = new TreeNode();
@@ -560,6 +580,101 @@ static void gbdt_findLeastVarV1(vector<float>& spList, float feaList[], float la
 
     }
 }
+
+static void gbdt_findLeastVarV3(float spList[], int spLen,
+	                         	float feaList[], float labelList[], float** _labelList, Block block[], Block** _block, int len,
+                                float& minSp, float& minVar, float& improve) {
+    minSp = FLT_MAX;
+    minVar = FLT_MAX;
+
+    float sum = 0.0;
+    for (int i = 0; i < len; ++i) {
+        // sum += labelList[i];
+        // sum += *(_labelList[i]);
+		// sum  += _block[i]->label;
+		sum  += block[i].label;
+    }
+
+	float beforeVar = -1 * sum / len * sum;
+
+    int spIdx = 0;
+    float _sum = 0.0;
+    for (int i = 1; i < len; ++i) {
+        if (spIdx > spLen) {
+            break;
+        }
+        _sum += block[i - 1].label;
+        // _sum += _block[i - 1]->label;
+        // _sum += labelList[i - 1];
+        // _sum += *(_labelList[i - 1]);
+        // if (feaList[i - 1] < spList[spIdx] && spList[spIdx] < feaList[i] ) {
+        // if (_block[i - 1]->fea < spList[spIdx] && spList[spIdx] < _block[i]->fea ) {
+        if (block[i - 1].fea < spList[spIdx] && spList[spIdx] < block[i].fea ) {
+            float rSum = sum - _sum;
+            float var = -1 * ( (_sum / i * _sum) + (rSum / (len - i) * rSum) );
+            if (var < minVar) {
+                minSp = spList[spIdx];
+                minVar = var;
+                // ++spIdx;
+            }
+            ++spIdx;
+        }
+    }
+
+	improve = beforeVar - minVar;
+	// printf("improve:%lf\n", improve);
+}
+
+
+
+
+
+
+static void gbdt_findLeastVarV2(float spList[], int spLen,
+	                         	float feaList[], float labelList[], float** _labelList, Block block[], Block** _block, int len,
+                                float& minSp, float& minVar, float& improve) {
+    minSp = FLT_MAX;
+    minVar = FLT_MAX;
+
+    float sum = 0.0;
+    for (int i = 0; i < len; ++i) {
+        sum += labelList[i];
+        // sum += *(_labelList[i]);
+		// sum  += _block[i]->label;
+		// sum  += block[i].label;
+    }
+
+	float beforeVar = -1 * sum / len * sum;
+
+    int spIdx = 0;
+    float _sum = 0.0;
+    for (int i = 1; i < len; ++i) {
+        if (spIdx > spLen) {
+            break;
+        }
+        // _sum += block[i - 1].label;
+        // _sum += _block[i - 1]->label;
+        _sum += labelList[i - 1];
+        // _sum += *(_labelList[i - 1]);
+        if (feaList[i - 1] < spList[spIdx] && spList[spIdx] < feaList[i] ) {
+        // if (_block[i - 1]->fea < spList[spIdx] && spList[spIdx] < _block[i]->fea ) {
+        // if (block[i - 1].fea < spList[spIdx] && spList[spIdx] < block[i].fea ) {
+            float rSum = sum - _sum;
+            float var = -1 * ( (_sum / i * _sum) + (rSum / (len - i) * rSum) );
+            if (var < minVar) {
+                minSp = spList[spIdx];
+                minVar = var;
+                // ++spIdx;
+            }
+            ++spIdx;
+        }
+    }
+
+	improve = beforeVar - minVar;
+	// printf("improve:%lf\n", improve);
+}
+
+
 
 struct ParamFeaSort {
     Matrix* data;
@@ -637,7 +752,8 @@ void* threadFeaSort(void* param_ptr) {
             continue;
         }
         // printf("fea not null:%d\n", fea);
-        vector<int>* sortId = param->sortIdMap->at(fea);
+        // vector<int>* sortId = param->sortIdMap->at(fea);
+        vector<int>* sortId = (*param->sortIdMap)[fea];
         float* feaDataVec = (float*)malloc(sizeof(float) * itemSize);
         float* labelDataVec = (float*)malloc(sizeof(float) * itemSize);
 
@@ -706,7 +822,8 @@ void* threadFea(void* param_ptr) {
 
 
         // vector<int>* sortId = (*sortIdMap)[fea];
-        vector<Block>* sortId = param->sortIdMap->at(fea);
+        // vector<Block>* sortId = param->sortIdMap->at(fea);
+        vector<Block>* sortId = (*param->sortIdMap)[fea];
 
         float feaDataVec[itemSize];
         float labelDataVec[itemSize];
@@ -1419,29 +1536,82 @@ int _comp(const pair<int, float>& a, const pair<int, float>& b) {
 */
 
 void* threadFeaGroupV2(void* param_ptr) {
+
+	double func_begin = getTime();
+
     struct  ParamLevel* param = (struct ParamLevel*)param_ptr;
     Matrix* data = param->data;
     map<int, vector<Block>*>* sortIdMap = param->sortIdMap;
-    vector<int>* feaVec = param->feaVec;
+    map<int, Block*>* p_sortIdMap = param->p_sortIdMap;
+	map<int, int*>*   p_sort2IdMap = param->p_sort2IdMap;
+    vector<int>*   feaVec  = param->feaVec;
+    vector<float>* predVec = param->predVec;
 
     int dataLen = data->length();
     int feaSize = 0;
     for (size_t i = 0; i < feaVec->size(); ++i) { feaSize += feaVec->at(i); }
 
+	/*
     int start = param->groupId * param->step;
     int end = (param->groupId + 1) * param->step - 1;
     end = end > feaSize - 1 ? feaSize - 1 : end;
+	*/
+    int start = param->start;
+    int end   = param->end;
     printf("start:%d end:%d\n", start, end);
 
-    int left = 0;
-    int right = 0;
+	if (start > end) {
+		printf("start end error!\n");
+		return (void*)0;
+	}
+
+    int left = -1;
+    int right = -1;
     for (int i = 0, sum = -1; i < static_cast<int>(feaVec->size()); ++i) {
         sum += feaVec->at(i);
-        if (sum == start) { left  = i; }
-        if (sum == end)   { right = i; }
+        if (sum == start) { left  = i; break; }
+    }
+    for (int i = 0, sum = -1; i < static_cast<int>(feaVec->size()); ++i) {
+        sum += feaVec->at(i);
+        if (sum == end )   { right = i; break; }
     }
     printf("left:%d right:%d\n", left, right);
 
+	int maxSize = 0;
+    for (size_t n = 0; n < param->nodes->size(); ++n) {
+		maxSize = std::max(maxSize, param->nodes->at(n)->size);
+	}
+	float** _labelDataVec = param->_labelDataVec;
+
+	// float* feaDataVec = param->feaDataVec;
+	// float* labelDataVec = param->labelDataVec;
+	// float* spVec = param->spVec;
+	// maxSize = dataLen;
+	float feaDataVec[maxSize];
+	float labelDataVec[maxSize];
+	float spVec[maxSize];
+
+	Block itBlock[maxSize];
+	Block* _itBlock[maxSize];
+
+
+	// vector<int> itemVec(predVec->size());
+	// int* itemVec = param->itemMask;
+	// int8_t* itemVec = param->itemMask;
+	int8_t itemVec[dataLen];
+	int _itemVec[dataLen];
+	
+	printf("pref_%d:%lf\n", param->groupId, getTime() - func_begin);
+
+	int8_t tmp_sort[dataLen];
+	int tmp_sort2Id[dataLen];
+	for (int i = 0; i < dataLen; ++i) {
+		tmp_sort2Id[i] = dataLen - i - 1;
+	}
+
+
+	double for_begin = getTime();
+	int8_t zero = 0;
     for (size_t n = 0; n < param->nodes->size(); ++n) {
         TreeNode* node = param->nodes->at(n);
         // 节点覆盖的最小数据量
@@ -1449,68 +1619,229 @@ void* threadFeaGroupV2(void* param_ptr) {
 
         // 最大深度
         if (node->depth >= trainConf.maxDepth - 1) { continue; }
-        
+
+		double set_begin = getTime();
         // 映射mask
         size_t itemSize = node->size;
-        vector<int> itemVec(param->predVec->size());
-        for (size_t i = 0; i < itemVec.size(); ++i) { itemVec[i] = 0; }
+        // vector<int> itemVec(predVec->size());
+        // for (size_t i = 0; i < itemVec.size(); ++i) { itemVec[i] = 0; }
+		/*
+        for (size_t i = 0; i < predVec->size(); ++i) { itemVec[i] = 0; }
         for (size_t i = 0; i < itemSize; ++i) { itemVec[node->itemIds[i]] += 1; }
-        
-        for (int _i = start; _i <= end; ++_i) {
-            int fea = _i;
-            if (feaVec->at(fea) < 1) { continue; }
-            
-            vector<Block>* sortId = sortIdMap->at(fea);
+		*/
+		// int* itemVec_p = itemVec;
+		memset(itemVec, 0, 1 * dataLen);
+		/* int8_t* _p = itemVec;
+		int8_t* _q = itemVec + dataLen;
+		while (_p < _q) {
+			*_p++ = 0;
+		} */
+		// memset(itemVec, 0, 4 * (dataLen + 31) / 32);
+		// memset(_itemVec, 0, 4 * dataLen);
+		// memset(itemVec, 0, sizeof(int) * dataLen);
+		// int* _ids_p = node->itemIds;
+        // for (size_t i = 0; i < itemSize; ++i) { itemVec[*_ids_p++] += 1; }
+		
+		int _id = 0;
+        for (size_t i = 0; i < itemSize; ++i) {
+			itemVec[node->itemIds[i]] += 1;
+			// _itemVec[node->itemIds[i]] += 1;
+			// _id = node->itemIds[i];
+			// itemVec[_id >> 5] |= 1 << (_id & 0x1F); 
+		}
+		printf("set_%d:%lf\n", param->groupId, getTime() - set_begin);
 
-            double pre_begin = getTime();
-            float feaDataVec[itemSize];
-            float labelDataVec[itemSize];
+		Block* block_p;
+		Block* block_p_end;
+		float* feaDataVec_p;
+		float* labelDataVec_p;
+		Block* itBlock_p;
+        
+		// double fea_begin = getTime();
+		// int tmp_id = 0;
+        // for (int _i = start; _i <= end; ++_i) {
+        for (int _i = left; _i <= right; ++_i) {
+
+            if (feaVec->at(_i) < 1) { 
+				continue;
+			}
+            // double pre_begin = getTime();
+			// printf("fealoop_%d:%lf\n", param->groupId, getTime() - pre_begin);
+
+            int fea = _i;
+
+			/*
+			int tmp = 0;
+            block_p = (*p_sortIdMap)[fea];
+            block_p_end = block_p + dataLen;
+			for (; block_p < block_p_end; ++block_p) {
+                if (itemVec[block_p->id] <= 0) { continue; }
+				++tmp;
+                if (tmp >= itemSize) { break; }
+			}
+			*/
+			
+			/*
+			int* itemVec_p = _itemVec;
+			int _tmp = 0;
+			for (int j = 0; j < dataLen; ++j) {
+				if (_itemVec[j] <= 0) {
+					_tmp += 2;
+				}
+			}
+			*/
+
+			int* tmp_sort2Id = (*p_sort2IdMap)[fea];
+
+			memset(tmp_sort, 0, dataLen);
+			for (size_t k = 0; k < itemSize; ++k) {
+				int idx = tmp_sort2Id[node->itemIds[k]];
+				tmp_sort[idx] = 1;
+			}
 
             int _idx = 0;
+            block_p = (*p_sortIdMap)[fea];
+			itBlock_p = itBlock;
+			for (size_t k = 0; k < dataLen; ++k) {
+				if (tmp_sort[k] == 0) { continue; }
+				*itBlock_p++ = *(block_p + k);
+				++_idx;
+                if (_idx >= itemSize) { break; }
+			}
+
+            
+            /*Block* block_p = (*p_sortIdMap)[fea];
+            Block* block_p_end = block_p + dataLen - 1;
+			float* feaDataVec_p   = feaDataVec;
+			float* labelDataVec_p = labelDataVec; */
+			/*
+            int _idx = 0;
+            block_p = (*p_sortIdMap)[fea];
+            block_p_end = block_p + dataLen;
+			feaDataVec_p = feaDataVec;
+			labelDataVec_p = labelDataVec;
+			itBlock_p = itBlock;
+			Block** _itBlock_p = _itBlock;
+			// for (int j = 0; j < dataLen; ++j, ++block_p) {
+			// int a = 10;
+			for (; block_p < block_p_end; ++block_p) {
+                if (itemVec[block_p->id] <= 0) { continue; }
+				// tmp_id = block_p->id;
+                // if ((itemVec[tmp_id >> 5] & (1 << (tmp_id & 0x1F))) == 0) { continue; }
+                // for (int k = 0; k < itemVec[block_p->id]; ++k) {
+                    // *feaDataVec_p++   = block_p->fea;
+                    // *labelDataVec_p++ = block_p->label;
+					// itBlock_p->fea = block_p->fea;
+					// itBlock_p->label = block_p->label;
+					*itBlock_p++ = *block_p;
+					// *_itBlock_p++ = block_p;
+                    ++_idx;
+                // }
+                if (_idx >= itemSize) { break; }
+			}
+			*/
+
+			/*
+            int _idx = 0;
+            // vector<Block>* sortId = sortIdMap->at(fea);
+            vector<Block>* sortId = (*sortIdMap)[fea];
+			// Block* sortId = (*p_sortIdMap)[fea];
             for (int j = 0; j < dataLen; ++j) {
-                Block& block = sortId->at(j);
-                // Block* block = &sortId->at(j);
-                if (itemVec[block.id] <= 0) { continue; }
-                for (int k = 0; k < itemVec[block.id]; ++k) {
-                    feaDataVec[_idx] = block.fea;
-                    labelDataVec[_idx] = block.label;
+                // Block& block = sortId->at(j);
+                Block* block = &sortId->at(j);
+				// Block* block = sortId + j;
+                if (itemVec[block->id] <= 0) { continue; }
+                for (int k = 0; k < itemVec[block->id]; ++k) {
+                    feaDataVec[_idx]   = block->fea;
+                    labelDataVec[_idx] = block->label;
+                    // labelDataVec[_idx]  = predVec->at(block.id);
+                    // labelDataVec[_idx]  = *(block._label);
+                    // _labelDataVec[_idx] = block._label;
                     ++_idx;
                 }
                 if (_idx >= itemSize) { break; }
             }
+			*/
 
-            printf("pre_find:%lf\n", getTime() - pre_begin);
+            // printf("pre-find:%lf\n", getTime() - pre_begin);
             
-            vector<float> spVec;
+            // vector<float> spVec;
+			// spVec.reserve(itemSize);
+			int spIdx = 0;
+			float last_value = 0.0f;
+			feaDataVec_p = feaDataVec + 1;
+		   	last_value = feaDataVec[0];
+		   	last_value = itBlock[0].fea;
             for (int j = 1; j < itemSize; ++j) {
-                if (feaDataVec[j - 1] + 1e-7 < feaDataVec[j]) {
-                    spVec.push_back(0.5 * (feaDataVec[j - 1] + feaDataVec[j]));
+                if (last_value + 1e-7 < itBlock[j].fea) {
+                    spVec[spIdx] = 0.5 * (last_value + itBlock[j].fea);
+					++spIdx;
+					last_value = itBlock[j].fea;
                 }
+				/*
+                if (itBlock[j - 1].fea + 1e-7 < itBlock[j].fea) {
+                    spVec[spIdx] = 0.5 * (itBlock[j - 1].fea + itBlock[j].fea);
+					++spIdx;
+				}
+				*/
+				/*
+				if (feaDataVec[j - 1] + 1e-7 < feaDataVec[j]) {
+                    // spVec.push_back(0.5 * (feaDataVec[j - 1] + feaDataVec[j]));
+                    spVec[spIdx] = 0.5 * (feaDataVec[j - 1] + feaDataVec[j]);
+					++spIdx;
+                }
+			    */
+				/*
+				if (last_value + 1e-7 < *feaDataVec_p) {
+					spVec[spIdx++] = 0.5 * (last_value + *feaDataVec_p);
+					last_value = *feaDataVec_p;
+				}
+				*/
+				++feaDataVec_p;
             }
-            printf("pre_find:%lf\n", getTime() - pre_begin);
+            // printf("pre_find:%lf item_size:%d\n", getTime() - pre_begin, itemSize);
 
-            if (spVec.size() <= 0) {
+            // if (spVec.size() <= 0) {
+            if (spIdx <= 0) {
                 // printf("fea:%d spVec is none\n", fea);
+				// printf("fealoop_%d:%lf\n", param->groupId, getTime() - pre_begin);
                 continue;
             }
 
-            double begin = getTime();
+            // double sp_begin = getTime();
             float curSp = FLT_MAX;
             float curVar = FLT_MAX;
+			float curImprove = 0.0f;
 
-            gbdt_findLeastVarV1(spVec, feaDataVec, labelDataVec, itemSize, curSp, curVar);
-            printf("sp size:%lu item:%lu last:%lf\n", spVec.size(), itemSize, getTime() - begin);
+            // gbdt_findLeastVarV1(spVec, feaDataVec, labelDataVec, itemSize, curSp, curVar);
+            // printf("sp size:%lu item:%lu last:%lf\n", spVec.size(), itemSize, getTime() - begin);
+            // gbdt_findLeastVarV2(spVec, spIdx, feaDataVec, labelDataVec, itemSize, curSp, curVar);
+            // gbdt_findLeastVarV2(spVec, spIdx, feaDataVec, labelDataVec, _labelDataVec, itBlock, _itBlock, itemSize, curSp, curVar, curImprove);
+            gbdt_findLeastVarV3(spVec, spIdx, feaDataVec, labelDataVec, _labelDataVec, itBlock, _itBlock, itemSize, curSp, curVar, curImprove);
+            // printf("sp:%lf\n", getTime() - sp_begin);
 
+			// param->staInfo->feaImprove[fea] += curImprove;
+			// param->staInfo->feaSelect[fea] += 1;
+
+			// 线程同步
+			pthread_mutex_lock(&mutex);
             if (curVar < param->minVar->at(n)) {
                 param->minFea->at(n) = fea;
                 param->minSp->at(n)  = curSp;
                 param->minVar->at(n) = curVar;
+                param->improve->at(n) = curImprove;
                 // printf("curVar:%f minVar:%f\n", curVar, minVar);
             }
-        }
-    }
-    return static_cast<void*>(0);
+			pthread_mutex_unlock(&mutex);
+            // printf("sp size:%d item:%lu last:%lf\n", spIdx, itemSize, getTime() - begin);
 
+        }
+		// printf("feasloop_%d:%lf\n", param->groupId, getTime() - fea_begin);
+    }
+
+	printf("func_%d:%lf\n", param->groupId, getTime() - func_begin);
+
+    return static_cast<void*>(0);
 }
 
 void* threadFeaGroup(void* params_ptr) {
@@ -1625,42 +1956,115 @@ void* threadFeaGroup(void* params_ptr) {
 
 void levelWiseV3(Matrix* data,
                  map<int, vector<Block>*>* sortIdMap,
+                 map<int, Block*>* p_sortIdMap,
+				 map<int, int*>* p_sort2IdMap,
+				 StaInfo* staInfo,
                  vector<float>& predVec,
                  vector<int>& itemVec,
                  vector<int>& feaVec,
+				 vector<float*>& feaDataVec,
+				 vector<float*>& labelDataVec,
+				 // vector<float**>& _labelDataVec,
+				 vector<float*>& spVec,
+				 vector<int8_t*>&   itemMask,
+				 vector<int>*   minFea,
+				 vector<float>* minSp,
+				 vector<float>* minVar,
+				 vector<float>* improve,
                  int threadSize,
                  int depth,
                  vector<TreeNode*>& levelList,
                  vector<TreeNode*>& newLevelList) {
 
     int feaSize = 0;
-    for (size_t i = 0; i < feaVec.size(); ++i) { feaSize += feaVec[i]; }
-    int step = (feaSize + threadSize - 1) / threadSize;
 
+	vector<int>* feaVec_p = new vector<int>(feaVec.size());
+	vector<float>* predVec_p = new vector<float>(predVec.size());
+	vector<TreeNode*>* levelList_p = new vector<TreeNode*>(levelList.size());
+
+    for (size_t i = 0; i < feaVec.size(); ++i) {
+		feaSize += feaVec[i];
+		feaVec_p->at(i) = feaVec[i];
+	}
+    for (size_t i = 0; i < predVec.size(); ++i) { predVec_p->at(i) = predVec[i]; }
+	for (size_t i = 0; i < levelList.size(); ++i) { levelList_p->at(i) = levelList[i]; }
+	
+	int x = 0;
+	int y = 0;
+	int step = 0;
+	for (int a = 0; a <= threadSize; ++a) {
+		int _t = (feaSize + a) % threadSize;
+		if (_t == 0) {
+			step = (feaSize + a) / threadSize;	
+			x = a;
+			y = threadSize - x;
+			break;
+		}
+	}
+
+	if (step <= 0) {
+		printf("get step error!\n");
+	}
+    int _step = (feaSize + threadSize - 1) / threadSize;
+
+	double param_begin = getTime();
     size_t nodeSize = levelList.size();
-    vector<int>*   minFea = new vector<int>(nodeSize, -1);
-    vector<float>* minSp  = new vector<float>(nodeSize, FLT_MAX);
-    vector<float>* minVar = new vector<float>(nodeSize, FLT_MAX);
+	for (size_t i = 0; i < nodeSize; ++i) {
+		minFea->at(i) = -1;
+		minSp->at(i)  = FLT_MAX;
+		minVar->at(i) = FLT_MAX;
+	}
+
+	float* feaImprove = new float[feaVec.size()];
+	memset(feaImprove, 0, feaVec.size() * sizeof(float));
 
     struct ParamLevel params[threadSize];
+	int _idx = 0;
     for (size_t i = 0; i < threadSize; ++i) {
         params[i].data = data;
         params[i].sortIdMap = sortIdMap;
+        params[i].p_sortIdMap = p_sortIdMap;
+        params[i].p_sort2IdMap = p_sort2IdMap;
         // params[i].itemVec = &itemVec;
-        params[i].feaVec = &feaVec;
-        params[i].predVec = &predVec;
+        // params[i].feaVec = &feaVec;
+        // params[i].predVec = &predVec;
+        params[i].feaVec = feaVec_p;
+        params[i].predVec = predVec_p;
         params[i].groupId = i;
-        params[i].step = step;
-        params[i].nodes  = &levelList;
+        params[i].step = _step;
+        // params[i].nodes  = &levelList;
+        params[i].nodes  = levelList_p;
         params[i].minFea = minFea;
         params[i].minSp  = minSp;
         params[i].minVar = minVar;
+
+		params[i].feaDataVec = feaDataVec[i];
+		params[i].labelDataVec = labelDataVec[i];
+		// params[i]._labelDataVec = _labelDataVec[i];
+		params[i].spVec = spVec[i];
+		params[i].itemMask = itemMask[i];
+
+		params[i].staInfo = staInfo;
+		params[i].improve = improve;
+
+		if (i + 1 <= x) {
+			params[i].start = _idx;
+			params[i].end = _idx + step - 1 - 1;
+			_idx += step - 1;
+		} else {
+			params[i].start = _idx;
+			params[i].end = _idx + step - 1;
+			_idx += step;
+		}
     }
 
     pthread_attr_t attr;
     pthread_attr_init(&attr);
-    pthread_attr_setstacksize(&attr, 50*1024*1024);     // 线程栈50M
+    pthread_attr_setstacksize(&attr, 5*1024*1024);     // 线程栈50M
 
+	printf("param:%lf\n", getTime() - param_begin);
+
+	double thread_begin = getTime();
     pthread_t threadPool[threadSize];
     for (size_t i = 0; i < threadSize; ++i) {
         int ret = pthread_create(&threadPool[i], &attr, threadFeaGroupV2, (void*)&params[i]);
@@ -1672,25 +2076,38 @@ void levelWiseV3(Matrix* data,
         void* status;
         pthread_join(threadPool[i], &status);
     }
+	printf("thread:%lf\n", getTime() - thread_begin);
 
+	double begin = getTime();
     for (size_t i = 0; i < levelList.size(); ++i) {
+
+        int _minFea = -1;
+        float _minSp = FLT_MAX;
+        float _minVar = FLT_MAX;
+		float _improve = FLT_MAX;
+
+        // for (int j = 0; j < threadSize; ++j) {
+            if (minVar->at(i) < _minVar) {
+                // minVar =yparams[j].minVar->at(i);
+                // minFea = params[j].minFea->at(i);
+                // minSp  = params[j].minSp->at(i);
+				// delta = param[j].improve->at(i);
+                _minVar = minVar->at(i);
+                _minFea = minFea->at(i);
+                _minSp  = minSp->at(i);
+				_improve = improve->at(i);
+            }
+        // }
+
+        if (_minFea < 0) { continue; }
+
+		staInfo->feaImprove[_minFea] += _improve;
+		staInfo->feaSelect[_minFea] += 1;
+
         TreeNode* node = levelList[i];
 
-        int minFea = -1;
-        float minSp = FLT_MAX;
-        float minVar = FLT_MAX;
-        for (int j = 0; j < threadSize; ++j) {
-            if (params[j].minVar->at(i) < minVar) {
-                minVar = params[j].minVar->at(i);
-                minFea = params[j].minFea->at(i);
-                minSp  = params[j].minSp->at(i);
-            }
-        }
-
-        if (minFea < 0) { continue; }
-
-        node->fidx = minFea;
-        node->split = minSp;
+        node->fidx = _minFea;
+        node->split = _minSp;
 
         vector<int> leftItems;
         leftItems.reserve(node->size);
@@ -1699,7 +2116,7 @@ void levelWiseV3(Matrix* data,
 
         for (size_t i = 0; i < node->size; ++i) {
             int id = node->itemIds[i];
-            if (data->at(id, minFea) <= minSp) {
+            if (data->at(id, _minFea) <= _minSp) {
                 leftItems.push_back(id);
             } else {
                 rightItems.push_back(id);
@@ -1708,7 +2125,7 @@ void levelWiseV3(Matrix* data,
 
         // 无法继续划分
         if (leftItems.size() <= 0 || rightItems.size() <= 0) {
-            printf("左子树或右子树为空: %d\t%f\t%f\n", minFea, minSp, minVar);
+            printf("左子树或右子树为空: %d\t%f\t%f\n", _minFea, _minSp, minVar);
         }
 
         node->left  = constructTreeNodeV1(leftItems, data, &predVec);
@@ -1719,6 +2136,12 @@ void levelWiseV3(Matrix* data,
         newLevelList.push_back(node->left);
         newLevelList.push_back(node->right);
     }
+
+	delete feaVec_p;
+	delete predVec_p;
+	delete levelList_p;
+
+	printf("depth:%d gather:%lf node_size:%ld\n", depth, getTime() - begin, levelList.size());
 }
 
 void levelWiseV2(Matrix* data,
@@ -1990,7 +2413,12 @@ void levelThread(Matrix* data,
 // TreeNode* gbdt_main(Matrix& data, map<int, vector<int>*>& sortIdMap,
 TreeNode* gbdt_main(Matrix* data,
                     map<int, vector<Block>*>* sortIdMap,
-                    vector<float>& predVec, vector<int>& itemVec, vector<int>& feaVec) {
+                    map<int, Block*>* p_sortIdMap,
+					map<int, int*>* p_sort2IdMap,
+                    vector<float>& predVec,
+					vector<int>& itemVec,
+					vector<int>& feaVec,
+					StaInfo* staInfo) {
  
     /*
     // 建树
@@ -2072,12 +2500,35 @@ TreeNode* gbdt_main(Matrix* data,
     vector<TreeNode*> newLevelList;
     levelList.push_back(root);
 
+	double _begin = getTime();
+	int threadSize = 12;
+	vector<float*> feaDataVec(threadSize);
+	vector<float*> labelDataVec(threadSize);
+	// vector<float**> _labelDataVec(threadSize);
+	vector<float*> spVec(threadSize);
+	vector<int8_t*>   itemMask(threadSize);
+	for (int i = 0; i < threadSize; ++i) {
+		feaDataVec[i]   = new float[itemVec.size()];
+		labelDataVec[i] = new float[itemVec.size()];
+		// _labelDataVec[i] = new float*[itemVec.size()];
+		spVec[i]        = new float[itemVec.size()];
+		itemMask[i]     = new int8_t[itemVec.size()];
+	}
+    vector<int>*   minFea  = new vector<int>(itemVec.size(), -1);
+    vector<float>* minSp   = new vector<float>(itemVec.size(), FLT_MAX);
+    vector<float>* minVar  = new vector<float>(itemVec.size(), FLT_MAX);
+    vector<float>* improve = new vector<float>(itemVec.size(), 0.0f);
+
+	printf("new:%lf\n", getTime() - _begin);
+
+	// pthread_mutex_init(&mutex,NULL);//初始化互斥锁
+
     int depth = 0;
     while (levelList.size() > 0) {
         depth += 1;
         printf("depth:%d\n", depth);
 
-        int threadSize = 4;
+        // int threadSize = 12;
 
         double begin = getTime();
 
@@ -2091,9 +2542,12 @@ TreeNode* gbdt_main(Matrix* data,
         }
         */
 
-        levelWiseV3(data, sortIdMap, predVec, itemVec, feaVec, threadSize, depth, levelList, newLevelList);
+        // levelWiseV3(data, sortIdMap, predVec, itemVec, feaVec, threadSize, depth, levelList, newLevelList);
+        // levelWiseV3(data, sortIdMap, predVec, itemVec, feaVec, feaDataVec, labelDataVec, _labelDataVec, spVec, itemMask, minFea, minSp, minVar, threadSize, depth, levelList, newLevelList);
+        levelWiseV3(data, sortIdMap, p_sortIdMap, p_sort2IdMap, staInfo, predVec, itemVec, feaVec, feaDataVec, labelDataVec, spVec, itemMask,
+			      	minFea, minSp, minVar, improve, threadSize, depth, levelList, newLevelList);
 
-        printf("depth:%d spend:%lf, node_size:%ld\n", depth, getTime() - begin, levelList.size());
+        printf("depth:%d spend:%lf node_size:%ld\n", depth, getTime() - begin, levelList.size());
 
         /*
         newLevelList.clear();
@@ -2108,9 +2562,19 @@ TreeNode* gbdt_main(Matrix* data,
 
         levelList = newLevelList;
         newLevelList.clear();
-
     }
 
+	for (int i = 0; i < threadSize; ++i) {
+		delete[] feaDataVec[i];
+		delete[] labelDataVec[i];
+		delete[] spVec[i];
+		delete[] itemMask[i];
+	}
+	delete minFea;
+	delete minSp;
+	delete minVar;
+
+	// pthread_mutex_destroy(&mutex);
 
     return root;
 }

@@ -8,9 +8,9 @@ import gc
 
 from   tree_node import *
 import tree
-import cart
+# import cart
 
-from TreeSVG import *
+# from TreeSVG import *
 
 def getLeaves(root):
     leaves = []
@@ -227,8 +227,8 @@ def gb(data, conf):
         # outSvg.truncate()
         # print >> sys.stderr, pain.pageHtml
         print >> outSvg, pain.pageHtml
-        '''
         outSvg.close
+        '''
  
 
     return treeList
