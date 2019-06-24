@@ -1,7 +1,10 @@
 #coding:utf-8
 import sys
-from tree_node import TreeNode 
 import numpy as np
+# from tree_node import TreeNode 
+from tree_node import *
+from ccp import *
+
 
 def variance(numList):
     if len(numList) <= 1:
@@ -113,12 +116,49 @@ def cart_main(data):
     tmpRoot = TreeNode(None, None, None)
     tmpRoot.depth = 0
 
-    head = cart_loop(data, tmpRoot, feaSize)
-    head.father = None
+    root = cart_loop(data, tmpRoot, feaSize)
+    root.father = None
 
-    return head
+    # id
+    level = [root]
+    nodeId = 0
+    while len(level) > 0:
+        newLevel = []
+        for node in level:
+            if node.left:
+                newLevel.append(node.left)
+            if node.right:
+                newLevel.append(node.right)
+            #visit
+            node.id = nodeId
+            nodeId += 1
+            print nodeId
+        level = newLevel
+
+    # ccp
+
+    treeList = ccp(data, root)
+    '''
+    g_t = getCost(data, root)
+    treeList = []
+    treeList.append(root)
+    
+    tmpTree = root
+    it = 0
+    while tmpTree.left and tmpTree.right:
+        print "iteratror:", it 
+        g_t = getCost(data, tmpTree)
+        newTree = cloneTree(tmpTree)
+        ccp(data, newTree)
+        treeList.append(newTree)
+        tmpTree = newTree
+        it += 1
+
+    # return root, newTree
+    '''
+    return treeList
 
    
 if __name__ == '__main__':
-    pass
+        pass
 

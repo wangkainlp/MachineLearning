@@ -1,6 +1,7 @@
 #coding:utf-8
 
 import sys
+from tree_node import *
 
 def getLeaves(root):
     leaves = [] 
@@ -26,7 +27,7 @@ def getCost(data, root):
     # bottomUpTraverse
     bottom2TopTraverse(data, levelList, g_t)
 
-    return sorted(g_t, key=lambda g : g[1])
+    return sorted(g_t, key=lambda g : g[0])
 
 def bottom2TopTraverse(data, levelList, g_t):
     if not levelList:
@@ -83,25 +84,77 @@ def predSubtreeCost(data, subtree, g_t):
         C_T += sum([(score - pred) ** 2  for score in scoreList])
 
     gt = 1.0 * (C_t - C_T) / (T_leaves - 1)
-    g_t.append((subtree.id, gt))
+    g_t.append((gt, subtree.id))
 
-def prune(tree, nodeId):
+def prune(data, tree, nodeId):
     levelList = [tree]
-    while len(levelList) > 0:
+    flag = True
+    while len(levelList) > 0 and flag == True:
         newLevelList = []
         for node in levelList:
-            if node.id = nodeId:
+            if node.id == nodeId:
+                leaves = getLeaves(node)
+                ids = []
+                for leaf in leaves:
+                    ids.extend(leaf.itemIds)
+
+                valueSum = 0.0
+                for i in ids:
+                    valueSum += data[i][-1]
+                node.itemIds = list(ids)
+                node.value = valueSum / len(ids)
+                node.left = None
+                node.right = None
+                node.idx = -1
+                node.split = float('inf')
+                flag = False
+            if node.left:
+                newLevelList.append(node.left)
+            if node.right:
+                newLevelList.append(node.right)
+        levelList = newLevelList
 
 
-def ccp(root):
+
+                
+
+
+def ccp(data, root):
     k = 0
-    g_t = getCost(root)
-    min_alpha = g_t[0]
+    g_t = getCost(data, root)
+    print g_t
+    print sorted(g_t, key = lambda x : x[1])
+    min_alpha = g_t[0][0]
 
+    g_t_alpha = sorted(list(set([ x[0] for x in g_t ])))
+    print g_t_alpha
+
+    treeList = [root]
+    tree = root
+    for alpha in g_t_alpha:
+        newTree = cloneTree(tree)
+        for a, i in g_t:
+            if alpha == a:
+                print "min id:", i
+                prune(data, newTree, i)
+        tree = newTree
+        treeList.append(newTree)
+        if isLeaf(newTree):
+            print "reach root"
+            return treeList
+    else:
+        print "error! can not reach root"
+    return treeList
+                
+
+    '''
     for alpha, i in g_t:
         if min_alpha == alpha:
-            cut
-    
+            prune(data, root, i)
+            print "min id:", i
+            break
+    '''
+  
 
 
 

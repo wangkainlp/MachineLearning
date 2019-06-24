@@ -220,12 +220,14 @@ def gb(data, conf):
         copy_tree(gbtree, 0, root)
         treeList.append(root)
 
+        '''
         pain = TreeSVG(root)
         pain.draw()
         outSvg = open('test.svg', 'w')
         # outSvg.truncate()
         # print >> sys.stderr, pain.pageHtml
         print >> outSvg, pain.pageHtml
+        '''
         outSvg.close
  
 

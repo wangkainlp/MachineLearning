@@ -17,9 +17,6 @@ if __name__ == '__main__':
 
     print idx2label, label2idx
 
-    for i in range(len(irisData)):
-        irisData[i].insert(-1, i)
-        irisData[i][-1] = 0 if irisData[i][-1] == 1 else 1
 
     rand.seed(int(time.time()))
     rand.shuffle(irisData)
@@ -30,16 +27,25 @@ if __name__ == '__main__':
 
     print "train size: %d test size: %d" % (len(irisTrainData), len(irisTestData))
 
+    for i in range(len(irisTrainData)):
+        irisTrainData[i].insert(-1, i)
+        irisTrainData[i][-1] = 0 if irisTrainData[i][-1] == 1 else 1
 
-    head = cart_main(irisTrainData)
+    # head = cart_main(irisTrainData)
+    # svg = TreeSVG(head)
+    # svg.draw()
+    # outSvg = open('test-cart.svg', 'w')
+    # print >> outSvg, svg.pageHtml
 
-    svg = TreeSVG(head)
-    svg.draw()
-
-    outSvg = open('test-cart.svg', 'w')
-    print >> outSvg, svg.pageHtml
+    treeList = cart_main(irisTrainData)
+    print "tree size:", len(treeList)
 
 
+    for i, tree in enumerate(treeList):
+        svg = TreeSVG(tree)
+        svg.draw()
+        outSvg = open('test-cart-%d.svg' % (i), 'w')
+        print >> outSvg, svg.pageHtml
 
 
 

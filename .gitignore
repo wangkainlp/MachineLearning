@@ -1,2 +1,5 @@
-*.swp
+*.sw[op]
+.*.swp
 *.pyc
+
+.DS_Store

@@ -16,7 +16,15 @@ def countTreeDepth(root):
         return 0
     leftSubTreeDepth = countTreeDepth(root.left)
     rightSubTreeDepth = countTreeDepth(root.right)
-    return 1 + max(leftSubTreeDepth, rightSubTreeDepth)
+    m = leftSubTreeDepth
+    if (leftSubTreeDepth < rightSubTreeDepth):
+        m = rightSubTreeDepth
+    return 1 + m
+    '''
+    m = max(leftSubTreeDepth, rightSubTreeDepth)
+    return 1 + m
+    '''
+    
 
 def treeDepth(root):
     '''

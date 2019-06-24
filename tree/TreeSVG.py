@@ -190,7 +190,8 @@ class TreeSVG(object):
         attrDict['fill-opacity'] = '0.0'
         attrDict['stroke-opacity'] = '1'
         attrDict['onmouseout'] = 'HideTooltip(evt)'
-        attrDict['style'] = 'stroke:black;stroke-width:2; fill:white; fill-opacity:0.9'
+        # attrDict['style'] = 'stroke:black;stroke-width:2; fill:white; fill-opacity:0.9'
+        attrDict['style'] = 'stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9'
         attrStr = ' '.join(map(lambda it : it[0] + '=' + '"' + str(it[1]) + '"', attrDict.items()))
         # pageHtml += '<circle ' + attrStr + '/>' 
         self.pageHtml += '\n<circle ' + attrStr + '/>' 
@@ -236,7 +237,8 @@ class TreeSVG(object):
                  leftFlag, rightFlag):
         self.drawDecisionNode(XY, nodeTextList)
         self.pageHtml += '\n'
-        self.drawText((XY[0], XY[1] ), nodeTextList)
+        # self.drawText((XY[0], XY[1] ), nodeTextList)
+        self.drawText((XY[0] + 1.0 * self.gRadius / 4, XY[1] ), nodeTextList)
         # self.drawText((XY[0] - self.gRadius / 2, XY[1] ), [nodeText, ''])
         # self.drawText((XY[0], XY[1] ), [nodeText, 'ab', '我是'])
 
@@ -258,7 +260,9 @@ class TreeSVG(object):
 
         childrenNum = 2 ** (depth - 1)
 
-        nodeTextList = ['level:%d' % (level), \
+        nodeTextList = [
+                        'id:%d' % (treeRoot.id), \
+                        'level:%d' % (level), \
                         'fea_idx:%d' % (treeRoot.idx), \
                         'split:%f' % (treeRoot.split), \
                         'size:%d' % (treeRoot.size), \
