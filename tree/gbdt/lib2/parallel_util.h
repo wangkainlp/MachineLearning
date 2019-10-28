@@ -38,7 +38,7 @@ void* threadPredict(void* paramPtr) {
         float pred = predict(root, feas);
         pre_preds[i] += pred;
 
-        pred = predTransform(pred);
+        // pred = predTransform(pred);
 
         pred *= shrink;
 
@@ -54,7 +54,7 @@ int parallel_predict(Matrix* data,
                      int dim,
                      float shrink,
                      vector<float>& pre_predVec,
-                     vector<float>& predVec) {
+                     vector<float>& predVec) { 
     int dataLen = predVec.size();
     int step = (dataLen + threadSize - 1) / threadSize;
 
@@ -95,7 +95,7 @@ int parallel_predict(Matrix* data,
         void* status;
         pthread_join(threadPool[i], &status);
     }
-
+    
     for (int i = 0; i < predVec.size(); ++i) {
         predVec[i] = preds[i];
         pre_predVec[i] = pre_preds[i];
@@ -170,7 +170,7 @@ int parallel_refresh(Matrix* data, map<int, Block*>* p_sortIdMap, int dim, int t
     }
 
     delete[] preds;
-
+    
     return 0;
 }
 

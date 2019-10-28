@@ -1,0 +1,141 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:a3="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+a3:scriptImplementation="Adobe"
+onload ="getSVGDoc(evt)"
+ width="180" height="180"
+version="1.1">
+<script type="text/javascript">
+<![CDATA[
+var svgdoc, svgroot, infoboxElem, infoboxTextElem; 
+
+function getSVGDoc(load_evt)
+{
+    svgdoc = load_evt.target.ownerDocument;
+    svgroot = svgdoc.documentElement;
+    infoboxElem = svgdoc.getElementById("infobox");
+    infoboxTextElem = svgdoc.getElementById("infobox_text");
+}
+
+function ShowTooltip(evt)
+{
+    var posx, posy, curtrans, ctx, cty;
+    posx = evt.clientX;
+    posy = evt.clientY;
+    curtrans = svgroot.currentTranslate;
+    ctx = curtrans.x;
+    cty = curtrans.y;
+
+    var targetshape = evt.target;
+    if (targetshape.getAttribute("class") != "info") {
+        return;
+    }
+    offPosX = Math.round(svgroot.scrollLeft + posx - ctx);
+    offPosY = Math.round(svgroot.scrollTop  + posy - cty); 
+
+    var ratio = window.innerWidth / window.outerWidth;
+    var font_size = 15 * ratio * 2;
+    console.log(ratio, font_size);
+
+    svgWidth = parseFloat(svgroot.getAttribute('width'));
+    svgHeight = parseFloat(svgroot.getAttribute('height'));
+
+
+    infoboxTextElem.setAttribute("width", 100 * ratio); 
+    infoboxTextElem.setAttribute("style", "fill: #0000CC; font-size: " + font_size + "px; visibility: visible");
+
+    // infoboxTextElem.innerHTML = "(" + posx + "," + posy + ")(" + offPosX + "," + offPosY + ")";
+    // infoboxTextElem.childNodes.item(0).data = "(" + posx + "," + posy + ")(" + offPosX + "," + offPosY + ")";
+    // infoboxTextElem.childNodes.item(1).data = "bbb";
+
+    // infoboxTextElem.childNodes.item(0).data = "(" + posx + "," + posy + ")(" + offPosX + "," + offPosY + ")";
+
+    // infoboxElem.setAttribute("width", infoboxTextElem.getComputedTextLength() + font_size * 2); 
+    infoboxElem.setAttribute("width", font_size * 12); 
+    infoboxElem.setAttribute("height", font_size * 3); 
+    infoboxElem.setAttribute("style", "fill: #FFFFCC; stroke: #000000; stroke-width: 0.5px; visibility: visible");
+
+    if ((offPosX + parseFloat(infoboxElem.getAttribute('width'))) > svgWidth) {
+        offPosX -= infoboxElem.getAttribute('width') + font_size;
+    }
+    infoboxElem.setAttribute("x", offPosX);
+    infoboxElem.setAttribute("y", offPosY);
+    infoboxTextElem.setAttribute("x", offPosX + font_size);
+    // infoboxTextElem.setAttribute("y", offPosY + font_size * 1.25); 
+    infoboxTextElem.setAttribute("y", offPosY + font_size); 
+
+    span_x = infoboxTextElem.getAttribute("x");
+    tspan_size = (infoboxTextElem.childNodes.length - 1) / 2;
+    node_info_list = targetshape.getAttribute("nodeinfo").split('*');
+    var maxTextSize = 0;
+    for (var i = 0; i < tspan_size; ++i) {
+        curIdx = 2 * i + 1;
+        infoboxTextElem.childNodes.item(curIdx).setAttribute("x", span_x);
+        infoboxTextElem.childNodes.item(curIdx).setAttribute("dy", font_size);
+        infoboxTextElem.childNodes.item(curIdx).innerHTML = node_info_list[i];
+        if (node_info_list[i].length > maxTextSize)
+            maxTextSize = node_info_list[i].length;
+    }
+
+    // infoboxElem.setAttribute("height", font_size * 3); 
+    infoboxElem.setAttribute("width", font_size * maxTextSize * 0.75); 
+    infoboxElem.setAttribute("height", font_size * tspan_size * 1.5); 
+
+    console.log("infoboxTextElem:",
+                maxTextSize, 
+                span_x,
+                tspan_size,
+                infoboxTextElem.childNodes.length,
+                infoboxTextElem.childNodes.item(0), 
+                infoboxTextElem.childNodes.item(1).innerHTML,
+                infoboxTextElem.childNodes.item(1),
+                infoboxTextElem.childNodes.item(2),
+                infoboxTextElem.childNodes.item(3),
+                infoboxTextElem.childNodes.item(4),
+                infoboxTextElem.innerHTML
+                )
+
+
+
+    console.log(new Date(), "click", posx, posy, offPosX, offPosY, svgWidth);
+}
+
+function HideTooltip(evt)
+{
+    infoboxElem.setAttribute("style", "visibility: hidden");
+    infoboxTextElem.setAttribute("style", "visibility: hidden");
+    // console.log(new Date(), "hidden");
+}
+
+function ZoomControl()
+{
+    var curzoom;
+    curzoom = svgroot.currentScale;
+    svgdoc.getElementById("tooltip").setAttribute("transform","scale("+1/curzoom+")");
+}
+
+]]> 
+</script>
+
+<circle style="stroke:black;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:1*fea_idx:-1*split:inf*size:135*value:0.652" cy="45" cx="60" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:1*fea_idx:-1*split:inf*size:135*value:0.652" y="45" x="68.75" font-family="Verdana" class="target" fill="black">
+<tspan x="41.75" lengthAdjust="spacing" y="30" textLenght="40"> id:0 </tspan>
+<tspan x="41.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:1 </tspan>
+<tspan x="41.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="41.75" lengthAdjust="spacing" textLenght="90" dy="10"> split:inf </tspan>
+<tspan x="41.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:135 </tspan>
+<tspan x="41.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.652 </tspan>
+</text></g><g id="tooltip" style="pointer-events: none">
+    <rect id="infobox" x="0" y="0" rx="5" ry="5" width="100" height="200"
+        style="visibility: hidden"/>
+    <text id="infobox_text" x="0" y="0" style="visibility: hidden">
+
+<tspan> </tspan>
+<tspan> </tspan>
+<tspan> </tspan>
+<tspan> </tspan>
+<tspan> </tspan>
+</text>
+</g></svg>

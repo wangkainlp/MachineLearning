@@ -1,12 +1,14 @@
 #coding:utf-8
 import sys
 from load_data import *
-sys.path.append('..')
+# sys.path.append('..')
 
 import time
 import random as rand
 import gbm
 # from TreeSVG import TreeSVG
+
+import eval
 
 conf = {}
 conf['rate'] = 0.8
@@ -49,14 +51,14 @@ if __name__ == '__main__':
             'feature_rate'   : 0.8,   \
             'sample_rate'    : 0.8,   \
             'col_sample'     : 0.8,   \
-            'row_sample'     : 0.7,   \
-            'tree_size'      : 10,     \
-            'shrink'         : 0.02,    \
+            'row_sample'     : 0.8,   \
+            'tree_size'      : 100,     \
+            'shrink'         : 0.1,    \
             'max_depth'      : 12,       \
             'min_cover_num'  : 30,      \
             'min_gain'       : 0.01,    \
             'lambda'         : 0.001,   \
-            'seed'           : 123,  \
+            'seed'           : 0,  \
             'None'           : 0 }
 
     # 训练：树的棵树、样本采样率、特征采样率
@@ -66,22 +68,36 @@ if __name__ == '__main__':
     accuCnt = 0
     irisTestData = irisTrainData
     # for it in irisTestData:
-    tmp_i = 0;
-    tmp_size = len(irisTestData)
-    while tmp_i < tmp_size:
-        it = irisTestData[tmp_i]
-        tmp_i += 1
- 
-        score = gbm.gbPred(gbTrees, it)
-        score = gbm.transform(score)
+    
+    # tmp_i = 0;
+    # tmp_size = len(irisTestData)
+    # while tmp_i < tmp_size:
+    #     it = irisTestData[tmp_i]
+    #     tmp_i += 1
+    predList = []
+    scoreList = []
+    labelList = []
+    for it in irisTestData:
+        # score = gbm.gbPred(gbTrees, it)
+        score = gbm.gbPred(gbTrees, it) * conf['shrink']
+        # score = gbm.transform(score)
         label = 1 if score > 0.5 else 0
         # label = score
         if abs(label - it[-1]) < 0.01:
             accuCnt += 1
-        print "%0.5f" %(score), label, it[-1]
+        scoreList.append(score)
+        predList.append(label)
+        labelList.append(it[-1])
+        print "%0.5f\t%d\t%d" %(score, int(label), int(it[-1]))
+
     print "acc:%d, sum:%d, acc_rate:%f" \
           % (accuCnt, len(irisTestData), 1.0 * accuCnt / len(irisTestData))
 
+    p, r, f = eval.PRF(predList, labelList)
+    print 'Precise:%f\tRecall:%f\tF1:%f' % (p, r, f)
+
+    auc = eval.ROC_rank(scoreList, labelList)
+    print 'AUC:%f' % (auc)
 
     '''
     treeList = cart_main(irisTrainData)

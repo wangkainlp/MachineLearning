@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include <cmath>
 #include "tree_node.h"
 #include "data.h"
 #include "loss.h"

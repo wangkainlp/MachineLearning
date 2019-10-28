@@ -1,7 +1,7 @@
 #ifndef _loss_h_
 #define _loss_h_
 
-#include <math.h>
+#include <cmath>
 
 #include "common.h"
 

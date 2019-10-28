@@ -1,3 +1,4 @@
+
 import sys
 threadSize = 10
 
@@ -23,3 +24,5 @@ for line in sys.stdin:
         else:
             print '%d:%d' % (idx,  idx + step - 1)
             idx += step
+
+

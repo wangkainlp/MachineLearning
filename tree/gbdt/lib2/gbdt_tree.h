@@ -600,7 +600,7 @@ static void gbdt_findLeastVarV3(float spList[], int spLen,
     int spIdx = 0;
     float _sum = 0.0;
     for (int i = 1; i < len; ++i) {
-        if (spIdx > spLen) {
+        if (spIdx >= spLen) {
             break;
         }
         _sum += block[i - 1].label;

@@ -2,10 +2,10 @@
 #define _myutil_h_
 
 #include <Python.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <time.h>
 #include <vector> 
-#include <math.h>
+#include <cmath>
 
 #include "tree_node.h"
 
@@ -54,6 +54,7 @@ double getTime() {
     return mm;
 }
 
+// Sigmoid func
 float predTransform(float val) {
     float ret = 0.0f;
     if (val >= 0.0f) {

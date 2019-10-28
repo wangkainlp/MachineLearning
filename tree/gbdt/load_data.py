@@ -13,6 +13,8 @@ def load_ec_data(filePath):
                 label = 0
             if abs(label - 1) < 0.1:
                 label = 1
+            if abs(label - 0.5) < 0.1:
+                label = 0.5
             cols.append(label)
             del cols[0]
             dataList.append([ float(i) for i in cols ])

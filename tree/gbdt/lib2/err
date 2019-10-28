@@ -1,0 +1,14 @@
+In file included from treemify.cpp:15:
+gbdt_tree.h: In function `void* threadFeaGroup(void*)':
+gbdt_tree.h:1680: warning: name lookup of `i' changed
+gbdt_tree.h:1621: warning:   matches this `i' under ISO standard rules
+gbdt_tree.h:1634: warning:   matches this `i' under old rules
+treemify.cpp: In function `PyObject* tree_gbdt(PyObject*, PyObject*)':
+treemify.cpp:925: error: `sortIdMap' was not declared in this scope
+treemify.cpp:926: error: `sortIdVec' was not declared in this scope
+treemify.cpp:949: warning: converting to `int' from `double'
+treemify.cpp: In function `PyObject* tree_xgboost_gbm(PyObject*, PyObject*)':
+treemify.cpp:1054: warning: converting to `int' from `double'
+treemify.cpp: In function `PyObject* tree_xgboost(PyObject*, PyObject*)':
+treemify.cpp:1125: warning: converting to `int' from `double'
+error: command 'gcc' failed with exit status 1

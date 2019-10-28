@@ -1,7 +1,6 @@
+rm -rf build
+# /home/work/.jumbo/bin/python2.7 setup.py build_ext
+# [ $? -eq 0 ] && { cp build/lib.linux-x86_64-2.7/tree.so ../tree.so; }
 
-rm -f build/lib.macosx-10.14-intel-2.7/tree.so
 /usr/bin/python setup.py build_ext
-
-[ -e ./tree.so ] && rm -f ./tree.so
-# cp build/lib.macosx-10.6-x86_64-2.7/tree.so .
-cp build/lib.macosx-10.14-intel-2.7/tree.so .
+# [ $? -eq 0 ] && { cp build/lib.linux-x86_64-2.7/tree.so ../tree.so; }

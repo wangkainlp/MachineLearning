@@ -1,0 +1,1241 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:a3="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+a3:scriptImplementation="Adobe"
+onload ="getSVGDoc(evt)"
+ width="7740" height="7740"
+version="1.1">
+<script type="text/javascript">
+<![CDATA[
+var svgdoc, svgroot, infoboxElem, infoboxTextElem; 
+
+function getSVGDoc(load_evt)
+{
+    svgdoc = load_evt.target.ownerDocument;
+    svgroot = svgdoc.documentElement;
+    infoboxElem = svgdoc.getElementById("infobox");
+    infoboxTextElem = svgdoc.getElementById("infobox_text");
+}
+
+function ShowTooltip(evt)
+{
+    var posx, posy, curtrans, ctx, cty;
+    posx = evt.clientX;
+    posy = evt.clientY;
+    curtrans = svgroot.currentTranslate;
+    ctx = curtrans.x;
+    cty = curtrans.y;
+
+    var targetshape = evt.target;
+    if (targetshape.getAttribute("class") != "info") {
+        return;
+    }
+    offPosX = Math.round(svgroot.scrollLeft + posx - ctx);
+    offPosY = Math.round(svgroot.scrollTop  + posy - cty); 
+
+    var ratio = window.innerWidth / window.outerWidth;
+    var font_size = 15 * ratio * 2;
+    console.log(ratio, font_size);
+
+    svgWidth = parseFloat(svgroot.getAttribute('width'));
+    svgHeight = parseFloat(svgroot.getAttribute('height'));
+
+
+    infoboxTextElem.setAttribute("width", 100 * ratio); 
+    infoboxTextElem.setAttribute("style", "fill: #0000CC; font-size: " + font_size + "px; visibility: visible");
+
+    // infoboxTextElem.innerHTML = "(" + posx + "," + posy + ")(" + offPosX + "," + offPosY + ")";
+    // infoboxTextElem.childNodes.item(0).data = "(" + posx + "," + posy + ")(" + offPosX + "," + offPosY + ")";
+    // infoboxTextElem.childNodes.item(1).data = "bbb";
+
+    // infoboxTextElem.childNodes.item(0).data = "(" + posx + "," + posy + ")(" + offPosX + "," + offPosY + ")";
+
+    // infoboxElem.setAttribute("width", infoboxTextElem.getComputedTextLength() + font_size * 2); 
+    infoboxElem.setAttribute("width", font_size * 12); 
+    infoboxElem.setAttribute("height", font_size * 3); 
+    infoboxElem.setAttribute("style", "fill: #FFFFCC; stroke: #000000; stroke-width: 0.5px; visibility: visible");
+
+    if ((offPosX + parseFloat(infoboxElem.getAttribute('width'))) > svgWidth) {
+        offPosX -= infoboxElem.getAttribute('width') + font_size;
+    }
+    infoboxElem.setAttribute("x", offPosX);
+    infoboxElem.setAttribute("y", offPosY);
+    infoboxTextElem.setAttribute("x", offPosX + font_size);
+    // infoboxTextElem.setAttribute("y", offPosY + font_size * 1.25); 
+    infoboxTextElem.setAttribute("y", offPosY + font_size); 
+
+    span_x = infoboxTextElem.getAttribute("x");
+    tspan_size = (infoboxTextElem.childNodes.length - 1) / 2;
+    node_info_list = targetshape.getAttribute("nodeinfo").split('*');
+    var maxTextSize = 0;
+    for (var i = 0; i < tspan_size; ++i) {
+        curIdx = 2 * i + 1;
+        infoboxTextElem.childNodes.item(curIdx).setAttribute("x", span_x);
+        infoboxTextElem.childNodes.item(curIdx).setAttribute("dy", font_size);
+        infoboxTextElem.childNodes.item(curIdx).innerHTML = node_info_list[i];
+        if (node_info_list[i].length > maxTextSize)
+            maxTextSize = node_info_list[i].length;
+    }
+
+    // infoboxElem.setAttribute("height", font_size * 3); 
+    infoboxElem.setAttribute("width", font_size * maxTextSize * 0.75); 
+    infoboxElem.setAttribute("height", font_size * tspan_size * 1.5); 
+
+    console.log("infoboxTextElem:",
+                maxTextSize, 
+                span_x,
+                tspan_size,
+                infoboxTextElem.childNodes.length,
+                infoboxTextElem.childNodes.item(0), 
+                infoboxTextElem.childNodes.item(1).innerHTML,
+                infoboxTextElem.childNodes.item(1),
+                infoboxTextElem.childNodes.item(2),
+                infoboxTextElem.childNodes.item(3),
+                infoboxTextElem.childNodes.item(4),
+                infoboxTextElem.innerHTML
+                )
+
+
+
+    console.log(new Date(), "click", posx, posy, offPosX, offPosY, svgWidth);
+}
+
+function HideTooltip(evt)
+{
+    infoboxElem.setAttribute("style", "visibility: hidden");
+    infoboxTextElem.setAttribute("style", "visibility: hidden");
+    // console.log(new Date(), "hidden");
+}
+
+function ZoomControl()
+{
+    var curzoom;
+    curzoom = svgroot.currentScale;
+    svgdoc.getElementById("tooltip").setAttribute("transform","scale("+1/curzoom+")");
+}
+
+]]> 
+</script>
+
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:1*fea_idx:79*split:0.424518*size:54091*value:-0.011" cy="45" cx="3840" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:1*fea_idx:79*split:0.424518*size:54091*value:-0.011" y="45" x="3848.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3813.75" lengthAdjust="spacing" y="30" textLenght="40"> id:0 </tspan>
+<tspan x="3813.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:1 </tspan>
+<tspan x="3813.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:79 </tspan>
+<tspan x="3813.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.424518 </tspan>
+<tspan x="3813.75" lengthAdjust="spacing" textLenght="100" dy="10"> size:54091 </tspan>
+<tspan x="3813.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.011 </tspan>
+</text></g>
+<line y1="80" x2="1920" style="stroke:rgb(0,0,0);stroke-width:2" x1="3840" y2="159.372539332"/>
+<line y1="80" x2="5760" style="stroke:rgb(0,0,0);stroke-width:2" x1="3840" y2="159.372539332"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:2*fea_idx:54*split:0.145829*size:44954*value:-0.021" cy="159.372539332" cx="1920" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:2*fea_idx:54*split:0.145829*size:44954*value:-0.021" y="159.372539332" x="1928.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1893.75" lengthAdjust="spacing" y="144" textLenght="40"> id:0 </tspan>
+<tspan x="1893.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:2 </tspan>
+<tspan x="1893.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:54 </tspan>
+<tspan x="1893.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.145829 </tspan>
+<tspan x="1893.75" lengthAdjust="spacing" textLenght="100" dy="10"> size:44954 </tspan>
+<tspan x="1893.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.021 </tspan>
+</text></g>
+<line y1="194.372539332" x2="960" style="stroke:rgb(0,0,0);stroke-width:2" x1="1920" y2="267.857231615"/>
+<line y1="194.372539332" x2="2880" style="stroke:rgb(0,0,0);stroke-width:2" x1="1920" y2="267.857231615"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:3*fea_idx:1*split:986.000000*size:25553*value:-0.033" cy="267.857231615" cx="960" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:3*fea_idx:1*split:986.000000*size:25553*value:-0.033" y="267.857231615" x="968.75" font-family="Verdana" class="target" fill="black">
+<tspan x="928.75" lengthAdjust="spacing" y="252" textLenght="40"> id:0 </tspan>
+<tspan x="928.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:3 </tspan>
+<tspan x="928.75" lengthAdjust="spacing" textLenght="90" dy="10"> fea_idx:1 </tspan>
+<tspan x="928.75" lengthAdjust="spacing" textLenght="160" dy="10"> split:986.000000 </tspan>
+<tspan x="928.75" lengthAdjust="spacing" textLenght="100" dy="10"> size:25553 </tspan>
+<tspan x="928.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.033 </tspan>
+</text></g>
+<line y1="302.857231615" x2="480" style="stroke:rgb(0,0,0);stroke-width:2" x1="960" y2="369.93927094"/>
+<line y1="302.857231615" x2="1440" style="stroke:rgb(0,0,0);stroke-width:2" x1="960" y2="369.93927094"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:4*fea_idx:66*split:0.038603*size:7528*value:-0.019" cy="369.93927094" cx="480" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:4*fea_idx:66*split:0.038603*size:7528*value:-0.019" y="369.93927094" x="488.75" font-family="Verdana" class="target" fill="black">
+<tspan x="453.75" lengthAdjust="spacing" y="354" textLenght="40"> id:0 </tspan>
+<tspan x="453.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:4 </tspan>
+<tspan x="453.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:66 </tspan>
+<tspan x="453.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.038603 </tspan>
+<tspan x="453.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:7528 </tspan>
+<tspan x="453.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.019 </tspan>
+</text></g>
+<line y1="404.93927094" x2="240" style="stroke:rgb(0,0,0);stroke-width:2" x1="480" y2="464.93927094"/>
+<line y1="404.93927094" x2="720" style="stroke:rgb(0,0,0);stroke-width:2" x1="480" y2="464.93927094"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:38*split:128.500000*size:7075*value:-0.022" cy="464.93927094" cx="240" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:38*split:128.500000*size:7075*value:-0.022" y="464.93927094" x="248.75" font-family="Verdana" class="target" fill="black">
+<tspan x="208.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="208.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="208.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:38 </tspan>
+<tspan x="208.75" lengthAdjust="spacing" textLenght="160" dy="10"> split:128.500000 </tspan>
+<tspan x="208.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:7075 </tspan>
+<tspan x="208.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.022 </tspan>
+</text></g>
+<line y1="499.93927094" x2="120" style="stroke:rgb(0,0,0);stroke-width:2" x1="240" y2="551.900795167"/>
+<line y1="499.93927094" x2="360" style="stroke:rgb(0,0,0);stroke-width:2" x1="240" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:45*split:0.063000*size:4354*value:-0.015" cy="551.900795167" cx="120" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:45*split:0.063000*size:4354*value:-0.015" y="551.900795167" x="128.75" font-family="Verdana" class="target" fill="black">
+<tspan x="93.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="93.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="93.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:45 </tspan>
+<tspan x="93.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.063000 </tspan>
+<tspan x="93.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:4354 </tspan>
+<tspan x="93.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.015 </tspan>
+</text></g>
+<line y1="586.900795167" x2="60" style="stroke:rgb(0,0,0);stroke-width:2" x1="120" y2="629.327202039"/>
+<line y1="586.900795167" x2="180" style="stroke:rgb(0,0,0);stroke-width:2" x1="120" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:2951*value:-0.023" cy="629.327202039" cx="60" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:2951*value:-0.023" y="629.327202039" x="68.75" font-family="Verdana" class="target" fill="black">
+<tspan x="33.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="33.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="33.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="33.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="33.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2951 </tspan>
+<tspan x="33.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.023 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:1403*value:0.000" cy="629.327202039" cx="180" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:1403*value:0.000" y="629.327202039" x="188.75" font-family="Verdana" class="target" fill="black">
+<tspan x="153.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="153.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="153.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="153.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="153.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:1403 </tspan>
+<tspan x="153.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.000 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:79*split:0.057237*size:2721*value:-0.032" cy="551.900795167" cx="360" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:79*split:0.057237*size:2721*value:-0.032" y="551.900795167" x="368.75" font-family="Verdana" class="target" fill="black">
+<tspan x="333.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="333.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="333.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:79 </tspan>
+<tspan x="333.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.057237 </tspan>
+<tspan x="333.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2721 </tspan>
+<tspan x="333.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.032 </tspan>
+</text></g>
+<line y1="586.900795167" x2="300" style="stroke:rgb(0,0,0);stroke-width:2" x1="360" y2="629.327202039"/>
+<line y1="586.900795167" x2="420" style="stroke:rgb(0,0,0);stroke-width:2" x1="360" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:2545*value:-0.035" cy="629.327202039" cx="300" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:2545*value:-0.035" y="629.327202039" x="308.75" font-family="Verdana" class="target" fill="black">
+<tspan x="273.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="273.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="273.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="273.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="273.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2545 </tspan>
+<tspan x="273.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.035 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:176*value:-0.001" cy="629.327202039" cx="420" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:176*value:-0.001" y="629.327202039" x="428.75" font-family="Verdana" class="target" fill="black">
+<tspan x="393.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="393.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="393.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="393.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="393.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:176 </tspan>
+<tspan x="393.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.001 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:62*split:11052.000000*size:453*value:0.019" cy="464.93927094" cx="720" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:62*split:11052.000000*size:453*value:0.019" y="464.93927094" x="728.75" font-family="Verdana" class="target" fill="black">
+<tspan x="683.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="683.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="683.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:62 </tspan>
+<tspan x="683.75" lengthAdjust="spacing" textLenght="180" dy="10"> split:11052.000000 </tspan>
+<tspan x="683.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:453 </tspan>
+<tspan x="683.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.019 </tspan>
+</text></g>
+<line y1="499.93927094" x2="600" style="stroke:rgb(0,0,0);stroke-width:2" x1="720" y2="551.900795167"/>
+<line y1="499.93927094" x2="840" style="stroke:rgb(0,0,0);stroke-width:2" x1="720" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:16*split:0.500000*size:248*value:0.039" cy="551.900795167" cx="600" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:16*split:0.500000*size:248*value:0.039" y="551.900795167" x="608.75" font-family="Verdana" class="target" fill="black">
+<tspan x="573.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="573.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="573.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:16 </tspan>
+<tspan x="573.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.500000 </tspan>
+<tspan x="573.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:248 </tspan>
+<tspan x="573.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.039 </tspan>
+</text></g>
+<line y1="586.900795167" x2="540" style="stroke:rgb(0,0,0);stroke-width:2" x1="600" y2="629.327202039"/>
+<line y1="586.900795167" x2="660" style="stroke:rgb(0,0,0);stroke-width:2" x1="600" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:206*value:0.050" cy="629.327202039" cx="540" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:206*value:0.050" y="629.327202039" x="548.75" font-family="Verdana" class="target" fill="black">
+<tspan x="513.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="513.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="513.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="513.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="513.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:206 </tspan>
+<tspan x="513.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.050 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:42*value:-0.017" cy="629.327202039" cx="660" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:42*value:-0.017" y="629.327202039" x="668.75" font-family="Verdana" class="target" fill="black">
+<tspan x="633.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="633.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="633.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="633.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="633.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:42 </tspan>
+<tspan x="633.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.017 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:69*split:0.080218*size:205*value:-0.004" cy="551.900795167" cx="840" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:69*split:0.080218*size:205*value:-0.004" y="551.900795167" x="848.75" font-family="Verdana" class="target" fill="black">
+<tspan x="813.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="813.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="813.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:69 </tspan>
+<tspan x="813.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.080218 </tspan>
+<tspan x="813.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:205 </tspan>
+<tspan x="813.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.004 </tspan>
+</text></g>
+<line y1="586.900795167" x2="780" style="stroke:rgb(0,0,0);stroke-width:2" x1="840" y2="629.327202039"/>
+<line y1="586.900795167" x2="900" style="stroke:rgb(0,0,0);stroke-width:2" x1="840" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:179*value:-0.015" cy="629.327202039" cx="780" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:179*value:-0.015" y="629.327202039" x="788.75" font-family="Verdana" class="target" fill="black">
+<tspan x="753.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="753.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="753.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="753.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="753.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:179 </tspan>
+<tspan x="753.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.015 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:26*value:0.071" cy="629.327202039" cx="900" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:26*value:0.071" y="629.327202039" x="908.75" font-family="Verdana" class="target" fill="black">
+<tspan x="873.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="873.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="873.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="873.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="873.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:26 </tspan>
+<tspan x="873.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.071 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:4*fea_idx:8*split:0.500000*size:18025*value:-0.039" cy="369.93927094" cx="1440" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:4*fea_idx:8*split:0.500000*size:18025*value:-0.039" y="369.93927094" x="1448.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1413.75" lengthAdjust="spacing" y="354" textLenght="40"> id:0 </tspan>
+<tspan x="1413.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:4 </tspan>
+<tspan x="1413.75" lengthAdjust="spacing" textLenght="90" dy="10"> fea_idx:8 </tspan>
+<tspan x="1413.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.500000 </tspan>
+<tspan x="1413.75" lengthAdjust="spacing" textLenght="100" dy="10"> size:18025 </tspan>
+<tspan x="1413.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.039 </tspan>
+</text></g>
+<line y1="404.93927094" x2="1200" style="stroke:rgb(0,0,0);stroke-width:2" x1="1440" y2="464.93927094"/>
+<line y1="404.93927094" x2="1680" style="stroke:rgb(0,0,0);stroke-width:2" x1="1440" y2="464.93927094"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:32*split:0.003011*size:1821*value:-0.005" cy="464.93927094" cx="1200" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:32*split:0.003011*size:1821*value:-0.005" y="464.93927094" x="1208.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1173.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="1173.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="1173.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:32 </tspan>
+<tspan x="1173.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.003011 </tspan>
+<tspan x="1173.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:1821 </tspan>
+<tspan x="1173.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.005 </tspan>
+</text></g>
+<line y1="499.93927094" x2="1080" style="stroke:rgb(0,0,0);stroke-width:2" x1="1200" y2="551.900795167"/>
+<line y1="499.93927094" x2="1320" style="stroke:rgb(0,0,0);stroke-width:2" x1="1200" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:84*split:-2.451962*size:658*value:-0.028" cy="551.900795167" cx="1080" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:84*split:-2.451962*size:658*value:-0.028" y="551.900795167" x="1088.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1051.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="1051.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="1051.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:84 </tspan>
+<tspan x="1051.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:-2.451962 </tspan>
+<tspan x="1051.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:658 </tspan>
+<tspan x="1051.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.028 </tspan>
+</text></g>
+<line y1="586.900795167" x2="1020" style="stroke:rgb(0,0,0);stroke-width:2" x1="1080" y2="629.327202039"/>
+<line y1="586.900795167" x2="1140" style="stroke:rgb(0,0,0);stroke-width:2" x1="1080" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:604*value:-0.034" cy="629.327202039" cx="1020" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:604*value:-0.034" y="629.327202039" x="1028.75" font-family="Verdana" class="target" fill="black">
+<tspan x="993.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="993.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="993.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="993.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="993.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:604 </tspan>
+<tspan x="993.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.034 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:54*value:0.035" cy="629.327202039" cx="1140" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:54*value:0.035" y="629.327202039" x="1148.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1113.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="1113.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="1113.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="1113.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="1113.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:54 </tspan>
+<tspan x="1113.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.035 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:50*split:15.000000*size:1163*value:0.008" cy="551.900795167" cx="1320" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:50*split:15.000000*size:1163*value:0.008" y="551.900795167" x="1328.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1291.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="1291.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="1291.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:50 </tspan>
+<tspan x="1291.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:15.000000 </tspan>
+<tspan x="1291.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:1163 </tspan>
+<tspan x="1291.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.008 </tspan>
+</text></g>
+<line y1="586.900795167" x2="1260" style="stroke:rgb(0,0,0);stroke-width:2" x1="1320" y2="629.327202039"/>
+<line y1="586.900795167" x2="1380" style="stroke:rgb(0,0,0);stroke-width:2" x1="1320" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:1014*value:0.014" cy="629.327202039" cx="1260" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:1014*value:0.014" y="629.327202039" x="1268.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1233.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="1233.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="1233.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="1233.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="1233.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:1014 </tspan>
+<tspan x="1233.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.014 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:149*value:-0.039" cy="629.327202039" cx="1380" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:149*value:-0.039" y="629.327202039" x="1388.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1353.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="1353.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="1353.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="1353.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="1353.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:149 </tspan>
+<tspan x="1353.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.039 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:43*split:18.614716*size:16204*value:-0.043" cy="464.93927094" cx="1680" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:43*split:18.614716*size:16204*value:-0.043" y="464.93927094" x="1688.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1651.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="1651.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="1651.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:43 </tspan>
+<tspan x="1651.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:18.614716 </tspan>
+<tspan x="1651.75" lengthAdjust="spacing" textLenght="100" dy="10"> size:16204 </tspan>
+<tspan x="1651.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.043 </tspan>
+</text></g>
+<line y1="499.93927094" x2="1560" style="stroke:rgb(0,0,0);stroke-width:2" x1="1680" y2="551.900795167"/>
+<line y1="499.93927094" x2="1800" style="stroke:rgb(0,0,0);stroke-width:2" x1="1680" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:64*split:1.700000*size:11277*value:-0.047" cy="551.900795167" cx="1560" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:64*split:1.700000*size:11277*value:-0.047" y="551.900795167" x="1568.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1533.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="1533.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="1533.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:64 </tspan>
+<tspan x="1533.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:1.700000 </tspan>
+<tspan x="1533.75" lengthAdjust="spacing" textLenght="100" dy="10"> size:11277 </tspan>
+<tspan x="1533.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.047 </tspan>
+</text></g>
+<line y1="586.900795167" x2="1500" style="stroke:rgb(0,0,0);stroke-width:2" x1="1560" y2="629.327202039"/>
+<line y1="586.900795167" x2="1620" style="stroke:rgb(0,0,0);stroke-width:2" x1="1560" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:11252*value:-0.047" cy="629.327202039" cx="1500" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:11252*value:-0.047" y="629.327202039" x="1508.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1473.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="1473.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="1473.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="1473.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="1473.75" lengthAdjust="spacing" textLenght="100" dy="10"> size:11252 </tspan>
+<tspan x="1473.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.047 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:25*value:0.056" cy="629.327202039" cx="1620" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:25*value:0.056" y="629.327202039" x="1628.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1593.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="1593.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="1593.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="1593.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="1593.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:25 </tspan>
+<tspan x="1593.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.056 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:93*split:3.500000*size:4927*value:-0.034" cy="551.900795167" cx="1800" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:93*split:3.500000*size:4927*value:-0.034" y="551.900795167" x="1808.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1773.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="1773.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="1773.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:93 </tspan>
+<tspan x="1773.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:3.500000 </tspan>
+<tspan x="1773.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:4927 </tspan>
+<tspan x="1773.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.034 </tspan>
+</text></g>
+<line y1="586.900795167" x2="1740" style="stroke:rgb(0,0,0);stroke-width:2" x1="1800" y2="629.327202039"/>
+<line y1="586.900795167" x2="1860" style="stroke:rgb(0,0,0);stroke-width:2" x1="1800" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:4801*value:-0.035" cy="629.327202039" cx="1740" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:4801*value:-0.035" y="629.327202039" x="1748.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1713.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="1713.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="1713.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="1713.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="1713.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:4801 </tspan>
+<tspan x="1713.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.035 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:126*value:0.012" cy="629.327202039" cx="1860" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:126*value:0.012" y="629.327202039" x="1868.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1833.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="1833.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="1833.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="1833.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="1833.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:126 </tspan>
+<tspan x="1833.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.012 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:3*fea_idx:0*split:10210.000000*size:19401*value:-0.005" cy="267.857231615" cx="2880" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:3*fea_idx:0*split:10210.000000*size:19401*value:-0.005" y="267.857231615" x="2888.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2843.75" lengthAdjust="spacing" y="252" textLenght="40"> id:0 </tspan>
+<tspan x="2843.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:3 </tspan>
+<tspan x="2843.75" lengthAdjust="spacing" textLenght="90" dy="10"> fea_idx:0 </tspan>
+<tspan x="2843.75" lengthAdjust="spacing" textLenght="180" dy="10"> split:10210.000000 </tspan>
+<tspan x="2843.75" lengthAdjust="spacing" textLenght="100" dy="10"> size:19401 </tspan>
+<tspan x="2843.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.005 </tspan>
+</text></g>
+<line y1="302.857231615" x2="2400" style="stroke:rgb(0,0,0);stroke-width:2" x1="2880" y2="369.93927094"/>
+<line y1="302.857231615" x2="3360" style="stroke:rgb(0,0,0);stroke-width:2" x1="2880" y2="369.93927094"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:4*fea_idx:43*split:90.393227*size:16304*value:0.000" cy="369.93927094" cx="2400" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:4*fea_idx:43*split:90.393227*size:16304*value:0.000" y="369.93927094" x="2408.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2371.75" lengthAdjust="spacing" y="354" textLenght="40"> id:0 </tspan>
+<tspan x="2371.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:4 </tspan>
+<tspan x="2371.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:43 </tspan>
+<tspan x="2371.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:90.393227 </tspan>
+<tspan x="2371.75" lengthAdjust="spacing" textLenght="100" dy="10"> size:16304 </tspan>
+<tspan x="2371.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.000 </tspan>
+</text></g>
+<line y1="404.93927094" x2="2160" style="stroke:rgb(0,0,0);stroke-width:2" x1="2400" y2="464.93927094"/>
+<line y1="404.93927094" x2="2640" style="stroke:rgb(0,0,0);stroke-width:2" x1="2400" y2="464.93927094"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:93*split:2.500000*size:10953*value:-0.008" cy="464.93927094" cx="2160" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:93*split:2.500000*size:10953*value:-0.008" y="464.93927094" x="2168.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2133.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="2133.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="2133.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:93 </tspan>
+<tspan x="2133.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:2.500000 </tspan>
+<tspan x="2133.75" lengthAdjust="spacing" textLenght="100" dy="10"> size:10953 </tspan>
+<tspan x="2133.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.008 </tspan>
+</text></g>
+<line y1="499.93927094" x2="2040" style="stroke:rgb(0,0,0);stroke-width:2" x1="2160" y2="551.900795167"/>
+<line y1="499.93927094" x2="2280" style="stroke:rgb(0,0,0);stroke-width:2" x1="2160" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:66*split:0.663656*size:8231*value:-0.015" cy="551.900795167" cx="2040" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:66*split:0.663656*size:8231*value:-0.015" y="551.900795167" x="2048.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2013.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="2013.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="2013.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:66 </tspan>
+<tspan x="2013.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.663656 </tspan>
+<tspan x="2013.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:8231 </tspan>
+<tspan x="2013.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.015 </tspan>
+</text></g>
+<line y1="586.900795167" x2="1980" style="stroke:rgb(0,0,0);stroke-width:2" x1="2040" y2="629.327202039"/>
+<line y1="586.900795167" x2="2100" style="stroke:rgb(0,0,0);stroke-width:2" x1="2040" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:7919*value:-0.017" cy="629.327202039" cx="1980" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:7919*value:-0.017" y="629.327202039" x="1988.75" font-family="Verdana" class="target" fill="black">
+<tspan x="1953.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="1953.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="1953.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="1953.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="1953.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:7919 </tspan>
+<tspan x="1953.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.017 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:312*value:0.043" cy="629.327202039" cx="2100" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:312*value:0.043" y="629.327202039" x="2108.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2073.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="2073.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="2073.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="2073.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="2073.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:312 </tspan>
+<tspan x="2073.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.043 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:92*split:1.000000*size:2722*value:0.012" cy="551.900795167" cx="2280" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:92*split:1.000000*size:2722*value:0.012" y="551.900795167" x="2288.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2253.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="2253.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="2253.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:92 </tspan>
+<tspan x="2253.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:1.000000 </tspan>
+<tspan x="2253.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2722 </tspan>
+<tspan x="2253.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.012 </tspan>
+</text></g>
+<line y1="586.900795167" x2="2220" style="stroke:rgb(0,0,0);stroke-width:2" x1="2280" y2="629.327202039"/>
+<line y1="586.900795167" x2="2340" style="stroke:rgb(0,0,0);stroke-width:2" x1="2280" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:1718*value:0.024" cy="629.327202039" cx="2220" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:1718*value:0.024" y="629.327202039" x="2228.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2193.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="2193.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="2193.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="2193.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="2193.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:1718 </tspan>
+<tspan x="2193.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.024 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:1004*value:-0.008" cy="629.327202039" cx="2340" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:1004*value:-0.008" y="629.327202039" x="2348.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2313.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="2313.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="2313.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="2313.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="2313.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:1004 </tspan>
+<tspan x="2313.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.008 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:93*split:3.500000*size:5351*value:0.017" cy="464.93927094" cx="2640" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:93*split:3.500000*size:5351*value:0.017" y="464.93927094" x="2648.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2613.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="2613.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="2613.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:93 </tspan>
+<tspan x="2613.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:3.500000 </tspan>
+<tspan x="2613.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:5351 </tspan>
+<tspan x="2613.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.017 </tspan>
+</text></g>
+<line y1="499.93927094" x2="2520" style="stroke:rgb(0,0,0);stroke-width:2" x1="2640" y2="551.900795167"/>
+<line y1="499.93927094" x2="2760" style="stroke:rgb(0,0,0);stroke-width:2" x1="2640" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:38*split:227.500000*size:4507*value:0.012" cy="551.900795167" cx="2520" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:38*split:227.500000*size:4507*value:0.012" y="551.900795167" x="2528.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2488.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="2488.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="2488.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:38 </tspan>
+<tspan x="2488.75" lengthAdjust="spacing" textLenght="160" dy="10"> split:227.500000 </tspan>
+<tspan x="2488.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:4507 </tspan>
+<tspan x="2488.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.012 </tspan>
+</text></g>
+<line y1="586.900795167" x2="2460" style="stroke:rgb(0,0,0);stroke-width:2" x1="2520" y2="629.327202039"/>
+<line y1="586.900795167" x2="2580" style="stroke:rgb(0,0,0);stroke-width:2" x1="2520" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:3266*value:0.019" cy="629.327202039" cx="2460" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:3266*value:0.019" y="629.327202039" x="2468.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2433.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="2433.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="2433.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="2433.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="2433.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:3266 </tspan>
+<tspan x="2433.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.019 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:1241*value:-0.008" cy="629.327202039" cx="2580" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:1241*value:-0.008" y="629.327202039" x="2588.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2553.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="2553.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="2553.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="2553.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="2553.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:1241 </tspan>
+<tspan x="2553.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.008 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:41*split:0.050500*size:844*value:0.046" cy="551.900795167" cx="2760" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:41*split:0.050500*size:844*value:0.046" y="551.900795167" x="2768.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2733.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="2733.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="2733.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:41 </tspan>
+<tspan x="2733.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.050500 </tspan>
+<tspan x="2733.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:844 </tspan>
+<tspan x="2733.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.046 </tspan>
+</text></g>
+<line y1="586.900795167" x2="2700" style="stroke:rgb(0,0,0);stroke-width:2" x1="2760" y2="629.327202039"/>
+<line y1="586.900795167" x2="2820" style="stroke:rgb(0,0,0);stroke-width:2" x1="2760" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:660*value:0.055" cy="629.327202039" cx="2700" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:660*value:0.055" y="629.327202039" x="2708.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2673.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="2673.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="2673.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="2673.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="2673.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:660 </tspan>
+<tspan x="2673.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.055 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:184*value:0.015" cy="629.327202039" cx="2820" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:184*value:0.015" y="629.327202039" x="2828.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2793.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="2793.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="2793.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="2793.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="2793.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:184 </tspan>
+<tspan x="2793.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.015 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:4*fea_idx:89*split:9.500000*size:3097*value:-0.034" cy="369.93927094" cx="3360" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:4*fea_idx:89*split:9.500000*size:3097*value:-0.034" y="369.93927094" x="3368.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3333.75" lengthAdjust="spacing" y="354" textLenght="40"> id:0 </tspan>
+<tspan x="3333.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:4 </tspan>
+<tspan x="3333.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:89 </tspan>
+<tspan x="3333.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:9.500000 </tspan>
+<tspan x="3333.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:3097 </tspan>
+<tspan x="3333.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.034 </tspan>
+</text></g>
+<line y1="404.93927094" x2="3120" style="stroke:rgb(0,0,0);stroke-width:2" x1="3360" y2="464.93927094"/>
+<line y1="404.93927094" x2="3600" style="stroke:rgb(0,0,0);stroke-width:2" x1="3360" y2="464.93927094"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:64*split:0.054922*size:2641*value:-0.041" cy="464.93927094" cx="3120" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:64*split:0.054922*size:2641*value:-0.041" y="464.93927094" x="3128.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3093.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="3093.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="3093.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:64 </tspan>
+<tspan x="3093.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.054922 </tspan>
+<tspan x="3093.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2641 </tspan>
+<tspan x="3093.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.041 </tspan>
+</text></g>
+<line y1="499.93927094" x2="3000" style="stroke:rgb(0,0,0);stroke-width:2" x1="3120" y2="551.900795167"/>
+<line y1="499.93927094" x2="3240" style="stroke:rgb(0,0,0);stroke-width:2" x1="3120" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:8*split:1.500000*size:2539*value:-0.044" cy="551.900795167" cx="3000" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:8*split:1.500000*size:2539*value:-0.044" y="551.900795167" x="3008.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2973.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="2973.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="2973.75" lengthAdjust="spacing" textLenght="90" dy="10"> fea_idx:8 </tspan>
+<tspan x="2973.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:1.500000 </tspan>
+<tspan x="2973.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2539 </tspan>
+<tspan x="2973.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.044 </tspan>
+</text></g>
+<line y1="586.900795167" x2="2940" style="stroke:rgb(0,0,0);stroke-width:2" x1="3000" y2="629.327202039"/>
+<line y1="586.900795167" x2="3060" style="stroke:rgb(0,0,0);stroke-width:2" x1="3000" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:284*value:-0.017" cy="629.327202039" cx="2940" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:284*value:-0.017" y="629.327202039" x="2948.75" font-family="Verdana" class="target" fill="black">
+<tspan x="2913.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="2913.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="2913.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="2913.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="2913.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:284 </tspan>
+<tspan x="2913.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.017 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:2255*value:-0.047" cy="629.327202039" cx="3060" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:2255*value:-0.047" y="629.327202039" x="3068.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3033.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="3033.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="3033.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="3033.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="3033.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2255 </tspan>
+<tspan x="3033.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.047 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:0*split:26726.000000*size:102*value:0.026" cy="551.900795167" cx="3240" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:0*split:26726.000000*size:102*value:0.026" y="551.900795167" x="3248.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3203.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="3203.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="3203.75" lengthAdjust="spacing" textLenght="90" dy="10"> fea_idx:0 </tspan>
+<tspan x="3203.75" lengthAdjust="spacing" textLenght="180" dy="10"> split:26726.000000 </tspan>
+<tspan x="3203.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:102 </tspan>
+<tspan x="3203.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.026 </tspan>
+</text></g>
+<line y1="586.900795167" x2="3180" style="stroke:rgb(0,0,0);stroke-width:2" x1="3240" y2="629.327202039"/>
+<line y1="586.900795167" x2="3300" style="stroke:rgb(0,0,0);stroke-width:2" x1="3240" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:86*value:0.041" cy="629.327202039" cx="3180" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:86*value:0.041" y="629.327202039" x="3188.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3153.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="3153.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="3153.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="3153.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="3153.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:86 </tspan>
+<tspan x="3153.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.041 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:16*value:-0.052" cy="629.327202039" cx="3300" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:16*value:-0.052" y="629.327202039" x="3308.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3273.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="3273.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="3273.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="3273.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="3273.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:16 </tspan>
+<tspan x="3273.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.052 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:27*split:91333.000000*size:456*value:0.006" cy="464.93927094" cx="3600" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:27*split:91333.000000*size:456*value:0.006" y="464.93927094" x="3608.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3563.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="3563.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="3563.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:27 </tspan>
+<tspan x="3563.75" lengthAdjust="spacing" textLenght="180" dy="10"> split:91333.000000 </tspan>
+<tspan x="3563.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:456 </tspan>
+<tspan x="3563.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.006 </tspan>
+</text></g>
+<line y1="499.93927094" x2="3480" style="stroke:rgb(0,0,0);stroke-width:2" x1="3600" y2="551.900795167"/>
+<line y1="499.93927094" x2="3720" style="stroke:rgb(0,0,0);stroke-width:2" x1="3600" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:90*split:-1.500000*size:313*value:0.027" cy="551.900795167" cx="3480" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:90*split:-1.500000*size:313*value:0.027" y="551.900795167" x="3488.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3451.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="3451.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="3451.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:90 </tspan>
+<tspan x="3451.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:-1.500000 </tspan>
+<tspan x="3451.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:313 </tspan>
+<tspan x="3451.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.027 </tspan>
+</text></g>
+<line y1="586.900795167" x2="3420" style="stroke:rgb(0,0,0);stroke-width:2" x1="3480" y2="629.327202039"/>
+<line y1="586.900795167" x2="3540" style="stroke:rgb(0,0,0);stroke-width:2" x1="3480" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:60*value:-0.029" cy="629.327202039" cx="3420" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:60*value:-0.029" y="629.327202039" x="3428.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3393.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="3393.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="3393.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="3393.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="3393.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:60 </tspan>
+<tspan x="3393.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.029 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:253*value:0.040" cy="629.327202039" cx="3540" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:253*value:0.040" y="629.327202039" x="3548.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3513.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="3513.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="3513.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="3513.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="3513.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:253 </tspan>
+<tspan x="3513.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.040 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:69*split:-0.669054*size:143*value:-0.041" cy="551.900795167" cx="3720" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:69*split:-0.669054*size:143*value:-0.041" y="551.900795167" x="3728.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3691.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="3691.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="3691.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:69 </tspan>
+<tspan x="3691.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:-0.669054 </tspan>
+<tspan x="3691.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:143 </tspan>
+<tspan x="3691.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.041 </tspan>
+</text></g>
+<line y1="586.900795167" x2="3660" style="stroke:rgb(0,0,0);stroke-width:2" x1="3720" y2="629.327202039"/>
+<line y1="586.900795167" x2="3780" style="stroke:rgb(0,0,0);stroke-width:2" x1="3720" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:11*value:0.038" cy="629.327202039" cx="3660" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:11*value:0.038" y="629.327202039" x="3668.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3633.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="3633.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="3633.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="3633.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="3633.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:11 </tspan>
+<tspan x="3633.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.038 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:132*value:-0.047" cy="629.327202039" cx="3780" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:132*value:-0.047" y="629.327202039" x="3788.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3753.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="3753.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="3753.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="3753.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="3753.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:132 </tspan>
+<tspan x="3753.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.047 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:2*fea_idx:69*split:0.001249*size:9137*value:0.037" cy="159.372539332" cx="5760" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:2*fea_idx:69*split:0.001249*size:9137*value:0.037" y="159.372539332" x="5768.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5733.75" lengthAdjust="spacing" y="144" textLenght="40"> id:0 </tspan>
+<tspan x="5733.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:2 </tspan>
+<tspan x="5733.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:69 </tspan>
+<tspan x="5733.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.001249 </tspan>
+<tspan x="5733.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:9137 </tspan>
+<tspan x="5733.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.037 </tspan>
+</text></g>
+<line y1="194.372539332" x2="4800" style="stroke:rgb(0,0,0);stroke-width:2" x1="5760" y2="267.857231615"/>
+<line y1="194.372539332" x2="6720" style="stroke:rgb(0,0,0);stroke-width:2" x1="5760" y2="267.857231615"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:3*fea_idx:79*split:3.039627*size:5932*value:0.029" cy="267.857231615" cx="4800" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:3*fea_idx:79*split:3.039627*size:5932*value:0.029" y="267.857231615" x="4808.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4773.75" lengthAdjust="spacing" y="252" textLenght="40"> id:0 </tspan>
+<tspan x="4773.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:3 </tspan>
+<tspan x="4773.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:79 </tspan>
+<tspan x="4773.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:3.039627 </tspan>
+<tspan x="4773.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:5932 </tspan>
+<tspan x="4773.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.029 </tspan>
+</text></g>
+<line y1="302.857231615" x2="4320" style="stroke:rgb(0,0,0);stroke-width:2" x1="4800" y2="369.93927094"/>
+<line y1="302.857231615" x2="5280" style="stroke:rgb(0,0,0);stroke-width:2" x1="4800" y2="369.93927094"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:4*fea_idx:75*split:14464.000000*size:2521*value:0.014" cy="369.93927094" cx="4320" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:4*fea_idx:75*split:14464.000000*size:2521*value:0.014" y="369.93927094" x="4328.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4283.75" lengthAdjust="spacing" y="354" textLenght="40"> id:0 </tspan>
+<tspan x="4283.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:4 </tspan>
+<tspan x="4283.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:75 </tspan>
+<tspan x="4283.75" lengthAdjust="spacing" textLenght="180" dy="10"> split:14464.000000 </tspan>
+<tspan x="4283.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2521 </tspan>
+<tspan x="4283.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.014 </tspan>
+</text></g>
+<line y1="404.93927094" x2="4080" style="stroke:rgb(0,0,0);stroke-width:2" x1="4320" y2="464.93927094"/>
+<line y1="404.93927094" x2="4560" style="stroke:rgb(0,0,0);stroke-width:2" x1="4320" y2="464.93927094"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:2*split:3807.000000*size:2237*value:0.018" cy="464.93927094" cx="4080" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:2*split:3807.000000*size:2237*value:0.018" y="464.93927094" x="4088.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4046.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="4046.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="4046.75" lengthAdjust="spacing" textLenght="90" dy="10"> fea_idx:2 </tspan>
+<tspan x="4046.75" lengthAdjust="spacing" textLenght="170" dy="10"> split:3807.000000 </tspan>
+<tspan x="4046.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2237 </tspan>
+<tspan x="4046.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.018 </tspan>
+</text></g>
+<line y1="499.93927094" x2="3960" style="stroke:rgb(0,0,0);stroke-width:2" x1="4080" y2="551.900795167"/>
+<line y1="499.93927094" x2="4200" style="stroke:rgb(0,0,0);stroke-width:2" x1="4080" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:58*split:8763.500000*size:1660*value:0.024" cy="551.900795167" cx="3960" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:58*split:8763.500000*size:1660*value:0.024" y="551.900795167" x="3968.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3926.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="3926.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="3926.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:58 </tspan>
+<tspan x="3926.75" lengthAdjust="spacing" textLenght="170" dy="10"> split:8763.500000 </tspan>
+<tspan x="3926.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:1660 </tspan>
+<tspan x="3926.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.024 </tspan>
+</text></g>
+<line y1="586.900795167" x2="3900" style="stroke:rgb(0,0,0);stroke-width:2" x1="3960" y2="629.327202039"/>
+<line y1="586.900795167" x2="4020" style="stroke:rgb(0,0,0);stroke-width:2" x1="3960" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:1457*value:0.028" cy="629.327202039" cx="3900" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:1457*value:0.028" y="629.327202039" x="3908.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3873.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="3873.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="3873.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="3873.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="3873.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:1457 </tspan>
+<tspan x="3873.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.028 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:203*value:-0.006" cy="629.327202039" cx="4020" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:203*value:-0.006" y="629.327202039" x="4028.75" font-family="Verdana" class="target" fill="black">
+<tspan x="3993.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="3993.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="3993.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="3993.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="3993.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:203 </tspan>
+<tspan x="3993.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.006 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:32*split:25.678452*size:577*value:0.002" cy="551.900795167" cx="4200" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:32*split:25.678452*size:577*value:0.002" y="551.900795167" x="4208.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4171.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="4171.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="4171.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:32 </tspan>
+<tspan x="4171.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:25.678452 </tspan>
+<tspan x="4171.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:577 </tspan>
+<tspan x="4171.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.002 </tspan>
+</text></g>
+<line y1="586.900795167" x2="4140" style="stroke:rgb(0,0,0);stroke-width:2" x1="4200" y2="629.327202039"/>
+<line y1="586.900795167" x2="4260" style="stroke:rgb(0,0,0);stroke-width:2" x1="4200" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:481*value:-0.007" cy="629.327202039" cx="4140" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:481*value:-0.007" y="629.327202039" x="4148.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4113.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="4113.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="4113.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="4113.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="4113.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:481 </tspan>
+<tspan x="4113.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.007 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:96*value:0.047" cy="629.327202039" cx="4260" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:96*value:0.047" y="629.327202039" x="4268.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4233.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="4233.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="4233.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="4233.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="4233.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:96 </tspan>
+<tspan x="4233.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.047 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:82*split:-0.051737*size:284*value:-0.020" cy="464.93927094" cx="4560" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:82*split:-0.051737*size:284*value:-0.020" y="464.93927094" x="4568.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4531.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="4531.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="4531.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:82 </tspan>
+<tspan x="4531.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:-0.051737 </tspan>
+<tspan x="4531.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:284 </tspan>
+<tspan x="4531.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.020 </tspan>
+</text></g>
+<line y1="499.93927094" x2="4440" style="stroke:rgb(0,0,0);stroke-width:2" x1="4560" y2="551.900795167"/>
+<line y1="499.93927094" x2="4680" style="stroke:rgb(0,0,0);stroke-width:2" x1="4560" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:47*split:12.000000*size:53*value:0.036" cy="551.900795167" cx="4440" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:47*split:12.000000*size:53*value:0.036" y="551.900795167" x="4448.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4411.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="4411.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="4411.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:47 </tspan>
+<tspan x="4411.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:12.000000 </tspan>
+<tspan x="4411.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:53 </tspan>
+<tspan x="4411.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.036 </tspan>
+</text></g>
+<line y1="586.900795167" x2="4380" style="stroke:rgb(0,0,0);stroke-width:2" x1="4440" y2="629.327202039"/>
+<line y1="586.900795167" x2="4500" style="stroke:rgb(0,0,0);stroke-width:2" x1="4440" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:17*value:-0.032" cy="629.327202039" cx="4380" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:17*value:-0.032" y="629.327202039" x="4388.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4353.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="4353.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="4353.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="4353.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="4353.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:17 </tspan>
+<tspan x="4353.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.032 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:36*value:0.068" cy="629.327202039" cx="4500" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:36*value:0.068" y="629.327202039" x="4508.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4473.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="4473.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="4473.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="4473.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="4473.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:36 </tspan>
+<tspan x="4473.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.068 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:45*split:0.968000*size:231*value:-0.033" cy="551.900795167" cx="4680" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:45*split:0.968000*size:231*value:-0.033" y="551.900795167" x="4688.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4653.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="4653.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="4653.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:45 </tspan>
+<tspan x="4653.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.968000 </tspan>
+<tspan x="4653.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:231 </tspan>
+<tspan x="4653.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.033 </tspan>
+</text></g>
+<line y1="586.900795167" x2="4620" style="stroke:rgb(0,0,0);stroke-width:2" x1="4680" y2="629.327202039"/>
+<line y1="586.900795167" x2="4740" style="stroke:rgb(0,0,0);stroke-width:2" x1="4680" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:188*value:-0.045" cy="629.327202039" cx="4620" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:188*value:-0.045" y="629.327202039" x="4628.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4593.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="4593.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="4593.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="4593.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="4593.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:188 </tspan>
+<tspan x="4593.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.045 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:43*value:0.020" cy="629.327202039" cx="4740" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:43*value:0.020" y="629.327202039" x="4748.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4713.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="4713.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="4713.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="4713.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="4713.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:43 </tspan>
+<tspan x="4713.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.020 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:4*fea_idx:60*split:102962.000000*size:3411*value:0.040" cy="369.93927094" cx="5280" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:4*fea_idx:60*split:102962.000000*size:3411*value:0.040" y="369.93927094" x="5288.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5241.75" lengthAdjust="spacing" y="354" textLenght="40"> id:0 </tspan>
+<tspan x="5241.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:4 </tspan>
+<tspan x="5241.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:60 </tspan>
+<tspan x="5241.75" lengthAdjust="spacing" textLenght="190" dy="10"> split:102962.000000 </tspan>
+<tspan x="5241.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:3411 </tspan>
+<tspan x="5241.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.040 </tspan>
+</text></g>
+<line y1="404.93927094" x2="5040" style="stroke:rgb(0,0,0);stroke-width:2" x1="5280" y2="464.93927094"/>
+<line y1="404.93927094" x2="5520" style="stroke:rgb(0,0,0);stroke-width:2" x1="5280" y2="464.93927094"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:21*split:0.309523*size:3182*value:0.043" cy="464.93927094" cx="5040" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:21*split:0.309523*size:3182*value:0.043" y="464.93927094" x="5048.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5013.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="5013.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="5013.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:21 </tspan>
+<tspan x="5013.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.309523 </tspan>
+<tspan x="5013.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:3182 </tspan>
+<tspan x="5013.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.043 </tspan>
+</text></g>
+<line y1="499.93927094" x2="4920" style="stroke:rgb(0,0,0);stroke-width:2" x1="5040" y2="551.900795167"/>
+<line y1="499.93927094" x2="5160" style="stroke:rgb(0,0,0);stroke-width:2" x1="5040" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:64*split:-0.019537*size:360*value:0.021" cy="551.900795167" cx="4920" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:64*split:-0.019537*size:360*value:0.021" y="551.900795167" x="4928.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4891.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="4891.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="4891.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:64 </tspan>
+<tspan x="4891.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:-0.019537 </tspan>
+<tspan x="4891.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:360 </tspan>
+<tspan x="4891.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.021 </tspan>
+</text></g>
+<line y1="586.900795167" x2="4860" style="stroke:rgb(0,0,0);stroke-width:2" x1="4920" y2="629.327202039"/>
+<line y1="586.900795167" x2="4980" style="stroke:rgb(0,0,0);stroke-width:2" x1="4920" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:62*value:-0.037" cy="629.327202039" cx="4860" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:62*value:-0.037" y="629.327202039" x="4868.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4833.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="4833.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="4833.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="4833.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="4833.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:62 </tspan>
+<tspan x="4833.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.037 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:298*value:0.033" cy="629.327202039" cx="4980" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:298*value:0.033" y="629.327202039" x="4988.75" font-family="Verdana" class="target" fill="black">
+<tspan x="4953.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="4953.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="4953.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="4953.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="4953.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:298 </tspan>
+<tspan x="4953.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.033 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:54*split:-0.000005*size:2822*value:0.045" cy="551.900795167" cx="5160" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:54*split:-0.000005*size:2822*value:0.045" y="551.900795167" x="5168.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5131.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="5131.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="5131.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:54 </tspan>
+<tspan x="5131.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:-0.000005 </tspan>
+<tspan x="5131.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2822 </tspan>
+<tspan x="5131.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.045 </tspan>
+</text></g>
+<line y1="586.900795167" x2="5100" style="stroke:rgb(0,0,0);stroke-width:2" x1="5160" y2="629.327202039"/>
+<line y1="586.900795167" x2="5220" style="stroke:rgb(0,0,0);stroke-width:2" x1="5160" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:497*value:0.027" cy="629.327202039" cx="5100" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:497*value:0.027" y="629.327202039" x="5108.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5073.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="5073.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="5073.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="5073.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="5073.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:497 </tspan>
+<tspan x="5073.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.027 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:2325*value:0.049" cy="629.327202039" cx="5220" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:2325*value:0.049" y="629.327202039" x="5228.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5193.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="5193.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="5193.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="5193.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="5193.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2325 </tspan>
+<tspan x="5193.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.049 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:47*split:14.500000*size:229*value:-0.000" cy="464.93927094" cx="5520" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:47*split:14.500000*size:229*value:-0.000" y="464.93927094" x="5528.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5491.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="5491.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="5491.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:47 </tspan>
+<tspan x="5491.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:14.500000 </tspan>
+<tspan x="5491.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:229 </tspan>
+<tspan x="5491.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.000 </tspan>
+</text></g>
+<line y1="499.93927094" x2="5400" style="stroke:rgb(0,0,0);stroke-width:2" x1="5520" y2="551.900795167"/>
+<line y1="499.93927094" x2="5640" style="stroke:rgb(0,0,0);stroke-width:2" x1="5520" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:63*split:161656.000000*size:82*value:0.041" cy="551.900795167" cx="5400" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:63*split:161656.000000*size:82*value:0.041" y="551.900795167" x="5408.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5361.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="5361.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="5361.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:63 </tspan>
+<tspan x="5361.75" lengthAdjust="spacing" textLenght="190" dy="10"> split:161656.000000 </tspan>
+<tspan x="5361.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:82 </tspan>
+<tspan x="5361.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.041 </tspan>
+</text></g>
+<line y1="586.900795167" x2="5340" style="stroke:rgb(0,0,0);stroke-width:2" x1="5400" y2="629.327202039"/>
+<line y1="586.900795167" x2="5460" style="stroke:rgb(0,0,0);stroke-width:2" x1="5400" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:13*value:-0.056" cy="629.327202039" cx="5340" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:13*value:-0.056" y="629.327202039" x="5348.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5313.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="5313.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="5313.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="5313.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="5313.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:13 </tspan>
+<tspan x="5313.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.056 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:69*value:0.059" cy="629.327202039" cx="5460" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:69*value:0.059" y="629.327202039" x="5468.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5433.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="5433.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="5433.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="5433.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="5433.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:69 </tspan>
+<tspan x="5433.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.059 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:29*split:28858.000000*size:147*value:-0.023" cy="551.900795167" cx="5640" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:29*split:28858.000000*size:147*value:-0.023" y="551.900795167" x="5648.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5603.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="5603.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="5603.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:29 </tspan>
+<tspan x="5603.75" lengthAdjust="spacing" textLenght="180" dy="10"> split:28858.000000 </tspan>
+<tspan x="5603.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:147 </tspan>
+<tspan x="5603.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.023 </tspan>
+</text></g>
+<line y1="586.900795167" x2="5580" style="stroke:rgb(0,0,0);stroke-width:2" x1="5640" y2="629.327202039"/>
+<line y1="586.900795167" x2="5700" style="stroke:rgb(0,0,0);stroke-width:2" x1="5640" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:132*value:-0.032" cy="629.327202039" cx="5580" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:132*value:-0.032" y="629.327202039" x="5588.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5553.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="5553.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="5553.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="5553.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="5553.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:132 </tspan>
+<tspan x="5553.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.032 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:15*value:0.056" cy="629.327202039" cx="5700" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:15*value:0.056" y="629.327202039" x="5708.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5673.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="5673.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="5673.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="5673.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="5673.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:15 </tspan>
+<tspan x="5673.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.056 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:3*fea_idx:89*split:21.500000*size:3205*value:0.052" cy="267.857231615" cx="6720" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:3*fea_idx:89*split:21.500000*size:3205*value:0.052" y="267.857231615" x="6728.75" font-family="Verdana" class="target" fill="black">
+<tspan x="6691.75" lengthAdjust="spacing" y="252" textLenght="40"> id:0 </tspan>
+<tspan x="6691.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:3 </tspan>
+<tspan x="6691.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:89 </tspan>
+<tspan x="6691.75" lengthAdjust="spacing" textLenght="150" dy="10"> split:21.500000 </tspan>
+<tspan x="6691.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:3205 </tspan>
+<tspan x="6691.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.052 </tspan>
+</text></g>
+<line y1="302.857231615" x2="6240" style="stroke:rgb(0,0,0);stroke-width:2" x1="6720" y2="369.93927094"/>
+<line y1="302.857231615" x2="7200" style="stroke:rgb(0,0,0);stroke-width:2" x1="6720" y2="369.93927094"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:4*fea_idx:47*split:9469.500000*size:3177*value:0.053" cy="369.93927094" cx="6240" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:4*fea_idx:47*split:9469.500000*size:3177*value:0.053" y="369.93927094" x="6248.75" font-family="Verdana" class="target" fill="black">
+<tspan x="6206.75" lengthAdjust="spacing" y="354" textLenght="40"> id:0 </tspan>
+<tspan x="6206.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:4 </tspan>
+<tspan x="6206.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:47 </tspan>
+<tspan x="6206.75" lengthAdjust="spacing" textLenght="170" dy="10"> split:9469.500000 </tspan>
+<tspan x="6206.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:3177 </tspan>
+<tspan x="6206.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.053 </tspan>
+</text></g>
+<line y1="404.93927094" x2="6000" style="stroke:rgb(0,0,0);stroke-width:2" x1="6240" y2="464.93927094"/>
+<line y1="404.93927094" x2="6480" style="stroke:rgb(0,0,0);stroke-width:2" x1="6240" y2="464.93927094"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:41*split:0.319500*size:2963*value:0.054" cy="464.93927094" cx="6000" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:41*split:0.319500*size:2963*value:0.054" y="464.93927094" x="6008.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5973.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="5973.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="5973.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:41 </tspan>
+<tspan x="5973.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.319500 </tspan>
+<tspan x="5973.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2963 </tspan>
+<tspan x="5973.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.054 </tspan>
+</text></g>
+<line y1="499.93927094" x2="5880" style="stroke:rgb(0,0,0);stroke-width:2" x1="6000" y2="551.900795167"/>
+<line y1="499.93927094" x2="6120" style="stroke:rgb(0,0,0);stroke-width:2" x1="6000" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:82*split:5.552636*size:2776*value:0.056" cy="551.900795167" cx="5880" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:82*split:5.552636*size:2776*value:0.056" y="551.900795167" x="5888.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5853.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="5853.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="5853.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:82 </tspan>
+<tspan x="5853.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:5.552636 </tspan>
+<tspan x="5853.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2776 </tspan>
+<tspan x="5853.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.056 </tspan>
+</text></g>
+<line y1="586.900795167" x2="5820" style="stroke:rgb(0,0,0);stroke-width:2" x1="5880" y2="629.327202039"/>
+<line y1="586.900795167" x2="5940" style="stroke:rgb(0,0,0);stroke-width:2" x1="5880" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:2764*value:0.056" cy="629.327202039" cx="5820" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:2764*value:0.056" y="629.327202039" x="5828.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5793.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="5793.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="5793.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="5793.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="5793.75" lengthAdjust="spacing" textLenght="90" dy="10"> size:2764 </tspan>
+<tspan x="5793.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.056 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:12*value:-0.036" cy="629.327202039" cx="5940" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:12*value:-0.036" y="629.327202039" x="5948.75" font-family="Verdana" class="target" fill="black">
+<tspan x="5913.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="5913.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="5913.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="5913.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="5913.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:12 </tspan>
+<tspan x="5913.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.036 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:54*split:4.581272*size:187*value:0.030" cy="551.900795167" cx="6120" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:54*split:4.581272*size:187*value:0.030" y="551.900795167" x="6128.75" font-family="Verdana" class="target" fill="black">
+<tspan x="6093.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="6093.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="6093.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:54 </tspan>
+<tspan x="6093.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:4.581272 </tspan>
+<tspan x="6093.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:187 </tspan>
+<tspan x="6093.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.030 </tspan>
+</text></g>
+<line y1="586.900795167" x2="6060" style="stroke:rgb(0,0,0);stroke-width:2" x1="6120" y2="629.327202039"/>
+<line y1="586.900795167" x2="6180" style="stroke:rgb(0,0,0);stroke-width:2" x1="6120" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:77*value:-0.006" cy="629.327202039" cx="6060" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:77*value:-0.006" y="629.327202039" x="6068.75" font-family="Verdana" class="target" fill="black">
+<tspan x="6033.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="6033.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="6033.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="6033.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="6033.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:77 </tspan>
+<tspan x="6033.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.006 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:110*value:0.055" cy="629.327202039" cx="6180" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:110*value:0.055" y="629.327202039" x="6188.75" font-family="Verdana" class="target" fill="black">
+<tspan x="6153.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="6153.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="6153.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="6153.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="6153.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:110 </tspan>
+<tspan x="6153.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.055 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:5*fea_idx:60*split:1907.500000*size:214*value:0.030" cy="464.93927094" cx="6480" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:5*fea_idx:60*split:1907.500000*size:214*value:0.030" y="464.93927094" x="6488.75" font-family="Verdana" class="target" fill="black">
+<tspan x="6446.75" lengthAdjust="spacing" y="449" textLenght="40"> id:0 </tspan>
+<tspan x="6446.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:5 </tspan>
+<tspan x="6446.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:60 </tspan>
+<tspan x="6446.75" lengthAdjust="spacing" textLenght="170" dy="10"> split:1907.500000 </tspan>
+<tspan x="6446.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:214 </tspan>
+<tspan x="6446.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.030 </tspan>
+</text></g>
+<line y1="499.93927094" x2="6360" style="stroke:rgb(0,0,0);stroke-width:2" x1="6480" y2="551.900795167"/>
+<line y1="499.93927094" x2="6600" style="stroke:rgb(0,0,0);stroke-width:2" x1="6480" y2="551.900795167"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:-1*split:0.000000*size:69*value:0.064" cy="551.900795167" cx="6360" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:-1*split:0.000000*size:69*value:0.064" y="551.900795167" x="6368.75" font-family="Verdana" class="target" fill="black">
+<tspan x="6333.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="6333.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="6333.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="6333.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="6333.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:69 </tspan>
+<tspan x="6333.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.064 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:6*fea_idx:32*split:9.133600*size:145*value:0.013" cy="551.900795167" cx="6600" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:6*fea_idx:32*split:9.133600*size:145*value:0.013" y="551.900795167" x="6608.75" font-family="Verdana" class="target" fill="black">
+<tspan x="6573.75" lengthAdjust="spacing" y="536" textLenght="40"> id:0 </tspan>
+<tspan x="6573.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:6 </tspan>
+<tspan x="6573.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:32 </tspan>
+<tspan x="6573.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:9.133600 </tspan>
+<tspan x="6573.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:145 </tspan>
+<tspan x="6573.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.013 </tspan>
+</text></g>
+<line y1="586.900795167" x2="6540" style="stroke:rgb(0,0,0);stroke-width:2" x1="6600" y2="629.327202039"/>
+<line y1="586.900795167" x2="6660" style="stroke:rgb(0,0,0);stroke-width:2" x1="6600" y2="629.327202039"/>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:45*value:-0.043" cy="629.327202039" cx="6540" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:45*value:-0.043" y="629.327202039" x="6548.75" font-family="Verdana" class="target" fill="black">
+<tspan x="6513.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="6513.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="6513.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="6513.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="6513.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:45 </tspan>
+<tspan x="6513.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.043 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:100*value:0.039" cy="629.327202039" cx="6660" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:7*fea_idx:-1*split:0.000000*size:100*value:0.039" y="629.327202039" x="6668.75" font-family="Verdana" class="target" fill="black">
+<tspan x="6633.75" lengthAdjust="spacing" y="614" textLenght="40"> id:0 </tspan>
+<tspan x="6633.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:7 </tspan>
+<tspan x="6633.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="6633.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="6633.75" lengthAdjust="spacing" textLenght="80" dy="10"> size:100 </tspan>
+<tspan x="6633.75" lengthAdjust="spacing" textLenght="110" dy="10"> value:0.039 </tspan>
+</text></g>
+<circle style="stroke:grey;stroke-width:2; fill:white; fill-opacity:0.9" onmouseout="HideTooltip(evt)" stroke-opacity="1" fill-opacity="0.0" nodeinfo="id:0*level:4*fea_idx:-1*split:0.000000*size:28*value:-0.034" cy="369.93927094" cx="7200" onclick="ShowTooltip(evt)" r="35" class="info"/>
+<g id="testG" onclick="ShowTooltip(evt)" onmouseout = "HideTooltip(evt)"><text font-size="10" nodeinfo="id:0*level:4*fea_idx:-1*split:0.000000*size:28*value:-0.034" y="369.93927094" x="7208.75" font-family="Verdana" class="target" fill="black">
+<tspan x="7173.75" lengthAdjust="spacing" y="354" textLenght="40"> id:0 </tspan>
+<tspan x="7173.75" lengthAdjust="spacing" textLenght="70" dy="10"> level:4 </tspan>
+<tspan x="7173.75" lengthAdjust="spacing" textLenght="100" dy="10"> fea_idx:-1 </tspan>
+<tspan x="7173.75" lengthAdjust="spacing" textLenght="140" dy="10"> split:0.000000 </tspan>
+<tspan x="7173.75" lengthAdjust="spacing" textLenght="70" dy="10"> size:28 </tspan>
+<tspan x="7173.75" lengthAdjust="spacing" textLenght="120" dy="10"> value:-0.034 </tspan>
+</text></g><g id="tooltip" style="pointer-events: none">
+    <rect id="infobox" x="0" y="0" rx="5" ry="5" width="100" height="200"
+        style="visibility: hidden"/>
+    <text id="infobox_text" x="0" y="0" style="visibility: hidden">
+
+<tspan> </tspan>
+<tspan> </tspan>
+<tspan> </tspan>
+<tspan> </tspan>
+<tspan> </tspan>
+</text>
+</g></svg>

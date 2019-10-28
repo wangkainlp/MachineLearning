@@ -1,0 +1,68 @@
+#include <Python.h>
+
+static double dataVariance(double sp, double feaList[], long len) {
+    long   lSize = 0;
+    double lSum = 0.0;
+    long   rSize = 0;
+    double rSum = 0.0;
+
+    int i;
+    for (i = 0; i < len; ++i) {
+        if (feaList[i] <= sp) {
+            ++lSize;
+            lSum += feaList[i];
+        } else {
+            ++rSize;
+            rSum += feaList[i];
+        }
+    }
+    return -1.0 * ( (lSum / lSize * lSum) + (rSum / rSize * rSum) );
+}
+
+static PyObject* var_findLeastVar(PyObject* self, PyObject* args) {
+    PyObject * spListObj;
+    PyObject * feaListObj;
+
+    if (! PyArg_ParseTuple(args, "OO", &spListObj, &feaListObj)) {
+        return NULL;
+    }
+
+    long spLen = PyList_Size(spListObj);
+    long feaLen = PyList_Size(feaListObj);
+
+    double spList[spLen];
+    double feaList[feaLen];
+
+    int i;
+    for (i = 0; i < spLen; ++i) {
+        spList[i] = PyFloat_AsDouble( PyList_GetItem(spListObj, i) );
+    }
+    for (i = 0; i < feaLen; ++i) {
+        feaList[i] = PyFloat_AsDouble( PyList_GetItem(feaListObj, i) );
+    }
+
+    double minSp = 1000000000.0;
+    double minVar = 1000000000.0; 
+    for (i = 0; i < spLen; ++i) {
+        double var = dataVariance(spList[i], feaList, feaLen);
+        if (var < minVar) {
+            minVar = var;
+            minSp = spList[i];
+        }
+    }
+
+    // return Py_BuildValue("d", minSp);
+    return Py_BuildValue("dd", 1.0, 2.0);
+}
+
+static char var_docs[] = "var( ) : findLeastVar\n";
+
+static PyMethodDef var_funcs[] = {
+    {"findLeastVar", (PyCFunction)var_findLeastVar, METH_VARARGS, var_docs},
+    {NULL, NULL, 0, NULL}
+
+};
+
+PyMODINIT_FUNC initvar(void) {
+    Py_InitModule3("var", var_funcs, "findLeastVar");
+}
