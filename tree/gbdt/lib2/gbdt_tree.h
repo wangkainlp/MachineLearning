@@ -361,7 +361,7 @@ TreeNode* _xgboostLoop_(Matrix& data, map<int, vector<int> >& sortIdMap, vector<
     // printf("loop1:%ld\n", time(NULL) - begin);
 
     // printf("run _3\n");
-    _findBestSpV2_1(data, sortIdMap, predVec, itemVec, feaVec, minFea, minSp, minVar);
+    _findBestSpV2_1_(data, sortIdMap, predVec, itemVec, feaVec, minFea, minSp, minVar);
     // _findBestSpV2(data, sortIdMap, predVec, itemVec, feaVec, minFea, minSp, minVar);
     // findBestSpV1(data, sortIdMap, predVec, itemVec, feaVec, minFea, minSp, minVar);
     // findBestSp(data, sortIdMap, itemVec, feaVec, minFea, minSp, minVar);
@@ -425,8 +425,8 @@ TreeNode* _xgboostLoop_(Matrix& data, map<int, vector<int> >& sortIdMap, vector<
         printf("左子树或右子树为空: %d\t%f\t%f\n", minFea, minSp, minVar);
     }
 
-    newNode->left  = _xgboostLoop(data, sortIdMap, predVec, newNode, leftItems, feaVec);
-    newNode->right = _xgboostLoop(data, sortIdMap, predVec, newNode, rightItems, feaVec);
+    newNode->left  = _xgboostLoop_(data, sortIdMap, predVec, newNode, leftItems, feaVec);
+    newNode->right = _xgboostLoop_(data, sortIdMap, predVec, newNode, rightItems, feaVec);
 
     return newNode;
 }

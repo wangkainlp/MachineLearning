@@ -1236,7 +1236,6 @@ PyMODINIT_FUNC inittree(void) {
 
 }
 
-
 int main(int argc, char *argv[]) {
     // Pass argv[0] to the Python interpreter
     Py_SetProgramName(argv[0]);

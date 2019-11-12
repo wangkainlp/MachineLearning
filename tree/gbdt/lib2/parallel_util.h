@@ -1,6 +1,8 @@
 #include <pthread.h>
 
 #include <map>
+#include "data.h"
+#include "gbdt_tree.h"
 #include "tree_node.h"
 
 #ifndef __parallel_util__
