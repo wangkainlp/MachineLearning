@@ -1,7 +1,6 @@
 *.sw[op]
 .*.swp
 *.pyc
-
 .DS_Store
 *.so
 *.o
